@@ -125,7 +125,7 @@ async function writeLocaleAsync(
     writeLocalizationAsync({
       type: 'appInfoLocalizations',
       ownerId: context.appInfoId,
-      id: info?.id,
+      ...(info === undefined ? {} : { id: info.id }),
       locale: desired.locale,
       attributes: {
         name: desired.name,
@@ -138,7 +138,7 @@ async function writeLocaleAsync(
     writeLocalizationAsync({
       type: 'appStoreVersionLocalizations',
       ownerId: context.versionId,
-      id: version?.id,
+      ...(version === undefined ? {} : { id: version.id }),
       locale: desired.locale,
       attributes: {
         ...(desired.description === undefined ? {} : { description: desired.description }),
