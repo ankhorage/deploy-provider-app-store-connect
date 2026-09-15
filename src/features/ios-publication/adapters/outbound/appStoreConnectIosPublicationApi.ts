@@ -32,7 +32,7 @@ export function createAppStoreConnectIosPublicationApi(
   return {
     findAppIdAsync: (bundleIdentifier, token) => findAppIdAsync(bundleIdentifier, token, runtime),
     readVersionAsync: (appId, version, token) => readVersionAsync(appId, version, token, runtime),
-    uploadBuildAsync: upload.uploadBuildAsync,
+    uploadBuildAsync: (options) => upload.uploadBuildAsync(options),
     ensureVersionAsync: (appId, version, token) =>
       ensureVersionAsync(appId, version, token, runtime),
     attachBuildAsync: (versionId, buildId, token) =>
