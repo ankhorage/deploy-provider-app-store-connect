@@ -1,0 +1,43 @@
+name: Bootstrap Repository
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    if: ${{ !contains(github.event.head_commit.message, '[bootstrap]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Install bootstrap dependencies
+        run: bun install
+      - name: Synchronize Ankhorage repository
+        run: bunx ankh devtools sync .
+      - name: Refresh lockfile
+        run: bun install
+      - name: Commit synchronized repository
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            exit 0
+          fi
+          git config user.name "ankhorage-renovate-sync[bot]"
+          git config user.email "ankhorage-renovate-sync[bot]@users.noreply.github.com"
+          git add --all
+          git reset -- .github/workflows/ci.yml .github/workflows/release.yml .github/workflows/renovate.yml
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: synchronize repository [bootstrap]"
+          git push origin HEAD:main
