@@ -8,15 +8,15 @@ Source: `src/types/appStoreConnect.ts:43:1`
 
 ### Members
 
-| Name | Kind | Type | Required | Description |
-| --- | --- | --- | --- | --- |
-| createToken | property | `AppStoreConnectTokenFactory` | no |  |
-| downloadArtifact | property | `AppStoreArtifactDownloader` | no |  |
-| maxAttempts | property | `number` | no |  |
-| now | property | `() => Date` | no |  |
-| request | property | `AppStoreConnectTransport` | no |  |
-| upload | property | `AppStoreUploadTransport` | no |  |
-| wait | property | `() => Promise<void>` | no |  |
+| Name             | Kind     | Type                          | Required | Description |
+| ---------------- | -------- | ----------------------------- | -------- | ----------- |
+| createToken      | property | `AppStoreConnectTokenFactory` | no       |             |
+| downloadArtifact | property | `AppStoreArtifactDownloader`  | no       |             |
+| maxAttempts      | property | `number`                      | no       |             |
+| now              | property | `() => Date`                  | no       |             |
+| request          | property | `AppStoreConnectTransport`    | no       |             |
+| upload           | property | `AppStoreUploadTransport`     | no       |             |
+| wait             | property | `() => Promise<void>`         | no       |             |
 
 ## createAppStoreConnectDeploymentProvider
 

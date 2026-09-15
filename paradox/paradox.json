@@ -66,28 +66,19 @@
   "readmeCli": null,
   "readmeConfig": null,
   "config": null,
-  "entrypoints": [
-    "src/index.ts"
-  ],
+  "entrypoints": ["src/index.ts"],
   "modules": [
     {
       "path": "paradox.config.ts",
       "isEntrypoint": false,
       "dependencies": [],
-      "exports": [
-        "default"
-      ]
+      "exports": ["default"]
     },
     {
       "path": "src/features/ios-publication/adapters/outbound/appStoreConnectIosBuildUploadApi.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "AppStoreConnectIosBuildUploadApi",
-        "createAppStoreConnectIosBuildUploadApi"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["AppStoreConnectIosBuildUploadApi", "createAppStoreConnectIosBuildUploadApi"]
     },
     {
       "path": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
@@ -96,10 +87,7 @@
         "src/features/ios-publication/adapters/outbound/appStoreConnectIosBuildUploadApi.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "AppStoreConnectIosPublicationApi",
-        "createAppStoreConnectIosPublicationApi"
-      ]
+      "exports": ["AppStoreConnectIosPublicationApi", "createAppStoreConnectIosPublicationApi"]
     },
     {
       "path": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
@@ -108,9 +96,7 @@
         "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "createAppStoreConnectIosPublisher"
-      ]
+      "exports": ["createAppStoreConnectIosPublisher"]
     },
     {
       "path": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
@@ -121,29 +107,19 @@
         "src/utils/createAppStoreConnectRuntime.ts",
         "src/utils/findAppStoreConnectAppIdAsync.ts"
       ],
-      "exports": [
-        "createAppStoreConnectMonetizationAdapter"
-      ]
+      "exports": ["createAppStoreConnectMonetizationAdapter"]
     },
     {
       "path": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "inspectAppStoreConnectMonetizationAsync"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["inspectAppStoreConnectMonetizationAsync"]
     },
     {
       "path": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "syncAppStoreConnectMonetizationProductAsync"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["syncAppStoreConnectMonetizationProductAsync"]
     },
     {
       "path": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts",
@@ -157,9 +133,7 @@
         "src/types/appStoreConnect.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "createAppStoreConnectDeploymentProvider"
-      ]
+      "exports": ["createAppStoreConnectDeploymentProvider"]
     },
     {
       "path": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
@@ -182,10 +156,7 @@
         "src/types/appStoreConnectRelease.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "AppStoreConnectReleaseMutationApi",
-        "createAppStoreConnectReleaseMutationApi"
-      ]
+      "exports": ["AppStoreConnectReleaseMutationApi", "createAppStoreConnectReleaseMutationApi"]
     },
     {
       "path": "src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts",
@@ -195,19 +166,13 @@
         "src/features/release/adapters/outbound/appStoreConnectReleaseMutationApi.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "createAppStoreConnectReleaseAdapter"
-      ]
+      "exports": ["createAppStoreConnectReleaseAdapter"]
     },
     {
       "path": "src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "createAppStoreConnectSetupAdapter"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["createAppStoreConnectSetupAdapter"]
     },
     {
       "path": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
@@ -217,10 +182,7 @@
         "src/utils/createAppStoreConnectRuntime.ts",
         "src/utils/findAppStoreConnectAppIdAsync.ts"
       ],
-      "exports": [
-        "AppStoreConnectListingMetadataApi",
-        "createAppStoreConnectListingMetadataApi"
-      ]
+      "exports": ["AppStoreConnectListingMetadataApi", "createAppStoreConnectListingMetadataApi"]
     },
     {
       "path": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
@@ -230,21 +192,13 @@
         "src/types/appStoreConnectListing.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "AppStoreConnectScreenshotApi",
-        "createAppStoreConnectScreenshotApi"
-      ]
+      "exports": ["AppStoreConnectScreenshotApi", "createAppStoreConnectScreenshotApi"]
     },
     {
       "path": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotUploadApi.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "AppStoreConnectScreenshotUploadApi",
-        "createAppStoreConnectScreenshotUploadApi"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["AppStoreConnectScreenshotUploadApi", "createAppStoreConnectScreenshotUploadApi"]
     },
     {
       "path": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
@@ -255,26 +209,18 @@
         "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
-      "exports": [
-        "createAppStoreConnectStoreListingAdapter"
-      ]
+      "exports": ["createAppStoreConnectStoreListingAdapter"]
     },
     {
       "path": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/types/appStoreConnectListing.ts"
-      ],
-      "exports": [
-        "mergeAppStoreListingLocales"
-      ]
+      "dependencies": ["src/types/appStoreConnectListing.ts"],
+      "exports": ["mergeAppStoreListingLocales"]
     },
     {
       "path": "src/index.test.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/index.ts"
-      ],
+      "dependencies": ["src/index.ts"],
       "exports": []
     },
     {
@@ -307,41 +253,25 @@
       "path": "src/types/appStoreConnectListing.ts",
       "isEntrypoint": false,
       "dependencies": [],
-      "exports": [
-        "AppStoreListingContext",
-        "AppStoreListingResource"
-      ]
+      "exports": ["AppStoreListingContext", "AppStoreListingResource"]
     },
     {
       "path": "src/types/appStoreConnectRelease.ts",
       "isEntrypoint": false,
       "dependencies": [],
-      "exports": [
-        "AppStorePhasedReleaseState",
-        "AppStoreReleaseContext",
-        "AppStoreReviewState"
-      ]
+      "exports": ["AppStorePhasedReleaseState", "AppStoreReleaseContext", "AppStoreReviewState"]
     },
     {
       "path": "src/utils/createAppStoreConnectRuntime.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/types/appStoreConnect.ts"
-      ],
-      "exports": [
-        "AppStoreConnectRuntime",
-        "createAppStoreConnectRuntime"
-      ]
+      "dependencies": ["src/types/appStoreConnect.ts"],
+      "exports": ["AppStoreConnectRuntime", "createAppStoreConnectRuntime"]
     },
     {
       "path": "src/utils/findAppStoreConnectAppIdAsync.ts",
       "isEntrypoint": false,
-      "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
-      ],
-      "exports": [
-        "findAppStoreConnectAppIdAsync"
-      ]
+      "dependencies": ["src/utils/createAppStoreConnectRuntime.ts"],
+      "exports": ["findAppStoreConnectAppIdAsync"]
     }
   ],
   "exports": [
@@ -357,9 +287,7 @@
         "line": 43,
         "column": 1
       },
-      "exportPaths": [
-        "src/index.ts"
-      ],
+      "exportPaths": ["src/index.ts"],
       "relatedSymbols": [],
       "signatures": [],
       "members": [
@@ -427,12 +355,8 @@
         "line": 17,
         "column": 1
       },
-      "exportPaths": [
-        "src/index.ts"
-      ],
-      "relatedSymbols": [
-        "AppStoreConnectDeploymentProviderOptions"
-      ],
+      "exportPaths": ["src/index.ts"],
+      "relatedSymbols": ["AppStoreConnectDeploymentProviderOptions"],
       "signatures": [
         {
           "label": "(options?: AppStoreConnectDeploymentProviderOptions) => DeploymentProviderRegistration",
