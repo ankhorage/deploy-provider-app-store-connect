@@ -1,6 +1,4 @@
-import type {
-  ReleaseStepExecutionRequest,
-} from '@ankhorage/contracts/deploy-provider';
+import type { ReleaseStepExecutionRequest } from '@ankhorage/contracts/deploy-provider';
 import { isRecord } from '@ankhorage/utility/object';
 import { isNonEmptyString } from '@ankhorage/utility/string';
 
@@ -62,7 +60,9 @@ async function syncNotesAsync(
   );
   if (existing === null) return false;
   const results = await Promise.all(
-    request.desired.notes.map((note) => writeReleaseNoteAsync(versionId, note, existing, token, runtime)),
+    request.desired.notes.map((note) =>
+      writeReleaseNoteAsync(versionId, note, existing, token, runtime),
+    ),
   );
   return results.every(Boolean);
 }
@@ -277,9 +277,7 @@ async function readCollectionAsync(
   const response = await safeRequestAsync(runtime, { method: 'GET', url, token });
   if (response === null || !isSuccess(response.status)) return null;
   const root = parseJson(response.body);
-  return isRecord(root) && Array.isArray(root.data)
-    ? root.data.map((item: unknown) => item)
-    : null;
+  return isRecord(root) && Array.isArray(root.data) ? root.data.map((item: unknown) => item) : null;
 }
 
 /*** Executes one provider request while containing transport failures. */

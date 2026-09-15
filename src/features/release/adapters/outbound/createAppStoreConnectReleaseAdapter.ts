@@ -158,7 +158,9 @@ async function controlAsync(
 }
 
 /*** Checks whether a release operation is provider-owned by App Store Connect. */
-function isSupportedOperation(operation: ReleaseStepExecutionRequest['step']['operation']): boolean {
+function isSupportedOperation(
+  operation: ReleaseStepExecutionRequest['step']['operation'],
+): boolean {
   return (
     operation === 'sync-notes' ||
     operation === 'submit-review' ||
@@ -195,9 +197,7 @@ function controlBlocked(code: string): ReleaseControlExecutionResult {
 }
 
 /*** Creates a failed App Store release inspection result. */
-function failedInspection(
-  code: string,
-): DeploymentProviderResult<ReleaseObservedIosState> {
+function failedInspection(code: string): DeploymentProviderResult<ReleaseObservedIosState> {
   return {
     status: 'failed',
     failure: {
