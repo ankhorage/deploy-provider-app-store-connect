@@ -118,9 +118,7 @@ async function syncMetadataAsync(
 /*** Synchronizes screenshot replacement plan steps. */
 async function syncAssetsAsync(
   request: StoreListingSyncRequest,
-  localizations: readonly NonNullable<
-    Awaited<ReturnType<MetadataApi['resolveContextAsync']>>
-  >['version'],
+  localizations: NonNullable<Awaited<ReturnType<MetadataApi['resolveContextAsync']>>>['version'],
   token: string,
   screenshots: ScreenshotApi,
 ): Promise<boolean> {
