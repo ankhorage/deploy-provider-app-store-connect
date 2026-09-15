@@ -1,0 +1,102 @@
+[
+  {
+    "name": "AppStoreConnectDeploymentProviderOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/appStoreConnect.ts",
+    "sourceLocation": {
+      "filePath": "src/types/appStoreConnect.ts",
+      "line": 43,
+      "column": 1
+    },
+    "exportPaths": ["src/index.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "createToken",
+        "kind": "property",
+        "type": "AppStoreConnectTokenFactory",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "downloadArtifact",
+        "kind": "property",
+        "type": "AppStoreArtifactDownloader",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "maxAttempts",
+        "kind": "property",
+        "type": "number",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "now",
+        "kind": "property",
+        "type": "() => Date",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "request",
+        "kind": "property",
+        "type": "AppStoreConnectTransport",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "upload",
+        "kind": "property",
+        "type": "AppStoreUploadTransport",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "wait",
+        "kind": "property",
+        "type": "() => Promise<void>",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "createAppStoreConnectDeploymentProvider",
+    "description": "Creates the canonical App Store Connect deployment provider registration.\n\nmonetization, release, and setup capabilities behind the portable deploy-provider contracts.",
+    "isReadme": true,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts",
+    "sourceLocation": {
+      "filePath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts",
+      "line": 17,
+      "column": 1
+    },
+    "exportPaths": ["src/index.ts"],
+    "relatedSymbols": ["AppStoreConnectDeploymentProviderOptions"],
+    "signatures": [
+      {
+        "label": "(options?: AppStoreConnectDeploymentProviderOptions) => DeploymentProviderRegistration",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "AppStoreConnectDeploymentProviderOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "DeploymentProviderRegistration",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  }
+]
