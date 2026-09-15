@@ -9,14 +9,14 @@ export type AppStoreConnectTokenFactory = (
   now: Date,
 ) => Promise<string | null>;
 
-export interface AppStoreConnectRequest {
+interface AppStoreConnectRequest {
   readonly method: 'DELETE' | 'GET' | 'PATCH' | 'POST';
   readonly url: string;
   readonly token: string;
   readonly body?: string;
 }
 
-export interface AppStoreConnectResponse {
+interface AppStoreConnectResponse {
   readonly status: number;
   readonly body: string;
 }
@@ -25,12 +25,12 @@ export type AppStoreConnectTransport = (
   request: AppStoreConnectRequest,
 ) => Promise<AppStoreConnectResponse>;
 
-export interface AppStoreUploadHeader {
+interface AppStoreUploadHeader {
   readonly name: string;
   readonly value: string;
 }
 
-export interface AppStoreUploadRequest {
+interface AppStoreUploadRequest {
   readonly method: string;
   readonly url: string;
   readonly headers: readonly AppStoreUploadHeader[];
