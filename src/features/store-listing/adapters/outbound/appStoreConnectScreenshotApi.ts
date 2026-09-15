@@ -8,6 +8,7 @@ import { isNonEmptyString } from '@ankhorage/utility/string';
 
 import type { AppStoreListingResource } from '../../../../types/appStoreConnectListing.js';
 import type { AppStoreConnectRuntime } from '../../../../utils/createAppStoreConnectRuntime.js';
+import { createAppStoreConnectScreenshotUploadApi } from './appStoreConnectScreenshotUploadApi.js';
 
 const API = 'https://api.appstoreconnect.apple.com/v1';
 
@@ -28,11 +29,14 @@ export interface AppStoreConnectScreenshotApi {
 export function createAppStoreConnectScreenshotApi(
   runtime: AppStoreConnectRuntime,
 ): AppStoreConnectScreenshotApi {
+  const upload = createAppStoreConnectScreenshotUploadApi(runtime);
   return {
     readAssetsAsync: (localizations, token) => readAssetsAsync(localizations, token, runtime),
-    replaceAssetsAsync: (options) => replaceAssetsAsync(options, runtime),
+    replaceAssetsAsync: (options) => replaceAssetsAsync(options, runtime, upload),
   };
 }
+
+type UploadApi = ReturnType<typeof createAppStoreConnectScreenshotUploadApi>;
 
 /*** Reads screenshot sets and provider checksum state for all version localizations. */
 async function readAssetsAsync(
@@ -40,10 +44,13 @@ async function readAssetsAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<readonly StoreListingRemoteAssetSet[] | null> {
-  const nested = await Promise.all(
-    localizations.map((localization) => readLocalizationAssetsAsync(localization, token, runtime)),
-  );
-  return nested.some((value) => value === null) ? null : nested.flatMap((value) => value ?? []);
+  const result: StoreListingRemoteAssetSet[] = [];
+  for (const localization of localizations) {
+    const assets = await readLocalizationAssetsAsync(localization, token, runtime);
+    if (assets === null) return null;
+    result.push(...assets);
+  }
+  return result;
 }
 
 /*** Reads screenshot sets for one App Store version localization. */
@@ -58,10 +65,13 @@ async function readLocalizationAssetsAsync(
     runtime,
   );
   if (sets === null) return null;
-  const values = await Promise.all(
-    sets.map((set) => readScreenshotSetAsync(localization.locale, set, token, runtime)),
-  );
-  return values.every((value) => value !== null) ? values.filter((value) => value !== null) : null;
+  const result: StoreListingRemoteAssetSet[] = [];
+  for (const set of sets) {
+    const parsed = await readScreenshotSetAsync(localization.locale, set, token, runtime);
+    if (parsed === null) return null;
+    result.push(parsed);
+  }
+  return result;
 }
 
 /*** Reads one screenshot set and its source-file checksums. */
@@ -103,6 +113,7 @@ async function replaceAssetsAsync(
     readonly token: string;
   },
   runtime: AppStoreConnectRuntime,
+  upload: UploadApi,
 ): Promise<boolean> {
   const setId = await ensureScreenshotSetAsync(
     options.localization.id,
@@ -112,18 +123,7 @@ async function replaceAssetsAsync(
   );
   if (setId === null) return false;
   if (!(await clearScreenshotsAsync(setId, options.token, runtime))) return false;
-  for (const asset of options.desired.assets) {
-    const bytes = await options.request.assets.readAsync(asset.relativePath);
-    const uploaded = await uploadScreenshotAsync(
-      setId,
-      asset.relativePath,
-      bytes,
-      options.token,
-      runtime,
-    );
-    if (!uploaded) return false;
-  }
-  return true;
+  return upload.uploadAssetsAsync(setId, options.request, options.desired, options.token);
 }
 
 /*** Finds or creates one screenshot set for a display variant. */
@@ -197,101 +197,6 @@ async function clearScreenshotsAsync(
   return responses.every((response) => response !== null && isSuccess(response.status));
 }
 
-/*** Reserves, transfers, and commits one App Store screenshot. */
-async function uploadScreenshotAsync(
-  setId: string,
-  fileName: string,
-  bytes: Uint8Array,
-  token: string,
-  runtime: AppStoreConnectRuntime,
-): Promise<boolean> {
-  const reservation = await reserveScreenshotAsync(
-    setId,
-    fileName,
-    bytes.byteLength,
-    token,
-    runtime,
-  );
-  if (reservation === null) return false;
-  const statuses = await Promise.all(
-    reservation.operations.map((operation) =>
-      runtime.upload({
-        method: operation.method,
-        url: operation.url,
-        headers: operation.headers,
-        body: bytes.slice(operation.offset, operation.offset + operation.length),
-      }),
-    ),
-  );
-  if (!statuses.every(isSuccess)) return false;
-  const committed = await safeRequestAsync(runtime, {
-    method: 'PATCH',
-    url: `${API}/appScreenshots/${encodeURIComponent(reservation.id)}`,
-    token,
-    body: JSON.stringify({
-      data: { type: 'appScreenshots', id: reservation.id, attributes: { uploaded: true } },
-    }),
-  });
-  return committed !== null && isSuccess(committed.status);
-}
-
-interface ScreenshotReservation {
-  readonly id: string;
-  readonly operations: readonly {
-    readonly offset: number;
-    readonly length: number;
-    readonly method: string;
-    readonly url: string;
-    readonly headers: readonly { readonly name: string; readonly value: string }[];
-  }[];
-}
-
-/*** Reserves signed upload operations for one screenshot. */
-async function reserveScreenshotAsync(
-  setId: string,
-  fileName: string,
-  fileSize: number,
-  token: string,
-  runtime: AppStoreConnectRuntime,
-): Promise<ScreenshotReservation | null> {
-  const response = await safeRequestAsync(runtime, {
-    method: 'POST',
-    url: `${API}/appScreenshots`,
-    token,
-    body: JSON.stringify({
-      data: {
-        type: 'appScreenshots',
-        attributes: { fileName, fileSize },
-        relationships: { appScreenshotSet: { data: { type: 'appScreenshotSets', id: setId } } },
-      },
-    }),
-  });
-  if (response?.status !== 201) return null;
-  const root = parseJson(response.body);
-  if (!isRecord(root) || !isRecord(root.data) || !isNonEmptyString(root.data.id)) return null;
-  if (!isRecord(root.data.attributes)) return null;
-  const operations = unknownArray(root.data.attributes.uploadOperations).map(parseUploadOperation);
-  return operations.every((operation) => operation !== null)
-    ? { id: root.data.id, operations: operations.filter((operation) => operation !== null) }
-    : null;
-}
-
-/*** Parses one screenshot upload operation. */
-function parseUploadOperation(value: unknown): ScreenshotReservation['operations'][number] | null {
-  if (!isRecord(value)) return null;
-  const { offset, length, method, url } = value;
-  if (typeof offset !== 'number' || typeof length !== 'number') return null;
-  if (!Number.isSafeInteger(offset) || !Number.isSafeInteger(length) || offset < 0 || length <= 0)
-    return null;
-  if (!isNonEmptyString(method) || !isNonEmptyString(url)) return null;
-  const headers = unknownArray(value.requestHeaders).flatMap((header) =>
-    isRecord(header) && isNonEmptyString(header.name) && typeof header.value === 'string'
-      ? [{ name: header.name, value: header.value }]
-      : [],
-  );
-  return { offset, length, method, url, headers };
-}
-
 /*** Reads one JSON:API collection. */
 async function readCollectionAsync(
   url: string,
@@ -325,11 +230,6 @@ function readResourceId(body: string, type: string): string | null {
     isNonEmptyString(root.data.id)
     ? root.data.id
     : null;
-}
-
-/*** Converts an unknown array boundary into a typed unknown list. */
-function unknownArray(value: unknown): readonly unknown[] {
-  return Array.isArray(value) ? value.map((item: unknown) => item) : [];
 }
 
 /*** Parses JSON without leaking parser exceptions. */
