@@ -105,8 +105,13 @@ async function readLocalizationsAsync(
 ): Promise<readonly AppStoreListingResource[] | null> {
   const values = await readCollectionAsync(url, token, runtime);
   if (values === null) return null;
-  const parsed = values.map(parseLocalization);
-  return parsed.every((value) => value !== null) ? parsed.filter((value) => value !== null) : null;
+  const result: AppStoreListingResource[] = [];
+  for (const value of values) {
+    const parsed = parseLocalization(value);
+    if (parsed === null) return null;
+    result.push(parsed);
+  }
+  return result;
 }
 
 /*** Parses one App Store localization resource. */
