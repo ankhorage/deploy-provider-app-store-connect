@@ -2,7 +2,10 @@ import type { StoreListingLocale } from '@ankhorage/contracts/deploy-provider';
 import { isRecord } from '@ankhorage/utility/object';
 import { isNonEmptyString } from '@ankhorage/utility/string';
 
-import type { AppStoreListingContext, AppStoreListingResource } from '../../../../types/appStoreConnectListing.js';
+import type {
+  AppStoreListingContext,
+  AppStoreListingResource,
+} from '../../../../types/appStoreConnectListing.js';
 import type { AppStoreConnectRuntime } from '../../../../utils/createAppStoreConnectRuntime.js';
 import { findAppStoreConnectAppIdAsync } from '../../../../utils/findAppStoreConnectAppIdAsync.js';
 
@@ -121,7 +124,6 @@ async function writeLocaleAsync(
   const writes = await Promise.all([
     writeLocalizationAsync({
       type: 'appInfoLocalizations',
-      ownerType: 'appInfos',
       ownerId: context.appInfoId,
       id: info?.id,
       locale: desired.locale,
@@ -135,7 +137,6 @@ async function writeLocaleAsync(
     }),
     writeLocalizationAsync({
       type: 'appStoreVersionLocalizations',
-      ownerType: 'appStoreVersions',
       ownerId: context.versionId,
       id: version?.id,
       locale: desired.locale,
@@ -156,7 +157,6 @@ async function writeLocaleAsync(
 /*** Creates or patches one App Store listing localization. */
 async function writeLocalizationAsync(options: {
   readonly type: 'appInfoLocalizations' | 'appStoreVersionLocalizations';
-  readonly ownerType: 'appInfos' | 'appStoreVersions';
   readonly ownerId: string;
   readonly id?: string;
   readonly locale: string;
@@ -176,17 +176,21 @@ async function writeLocalizationAsync(options: {
         type: options.type,
         ...(options.id === undefined ? {} : { id: options.id }),
         attributes: { locale: options.locale, ...options.attributes },
-        ...(options.id === undefined
-          ? {
-              relationships: {
-                owner: { data: { type: options.ownerType, id: options.ownerId } },
-              },
-            }
-          : {}),
+        ...(options.id === undefined ? { relationships: ownerRelationship(options) } : {}),
       },
     }),
   });
   return response !== null && isSuccess(response.status);
+}
+
+/*** Maps a listing localization type to Apple's required ownership relationship. */
+function ownerRelationship(options: {
+  readonly type: 'appInfoLocalizations' | 'appStoreVersionLocalizations';
+  readonly ownerId: string;
+}): Readonly<Record<string, unknown>> {
+  return options.type === 'appInfoLocalizations'
+    ? { appInfo: { data: { type: 'appInfos', id: options.ownerId } } }
+    : { appStoreVersion: { data: { type: 'appStoreVersions', id: options.ownerId } } };
 }
 
 /*** Reads one JSON:API collection. */
