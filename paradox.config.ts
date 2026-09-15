@@ -8,7 +8,7 @@ export default defineParadoxConfig({
   },
   package: {
     root: '.',
-    entrypoints: ['src/deployProviderAppStoreConnect.ts'],
+    entrypoints: ['src/index.ts'],
   },
   output: { dir: './paradox' },
 });
