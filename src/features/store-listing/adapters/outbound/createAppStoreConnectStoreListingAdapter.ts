@@ -56,14 +56,24 @@ async function inspectAsync(
   if (context.identity.target !== 'ios') return failed('APP_STORE_LISTING_IDENTITY_INVALID');
   const access = await runtime.resolveTokenAsync(context.credentials, context.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
-  const resolved = await resolveContextAsync(context.identity.bundleIdentifier, access.token, runtime);
+  const resolved = await resolveContextAsync(
+    context.identity.bundleIdentifier,
+    access.token,
+    runtime,
+  );
   if (resolved === null) return editableRequired();
   const locales = mergeLocales(resolved.appInfo, resolved.version);
   const assetSets = await readAssetsAsync(resolved.version, access.token, runtime);
   if (assetSets === null) return failed('APP_STORE_LISTING_INSPECTION_FAILED');
   return {
     status: 'completed',
-    value: { target: 'ios', locales, assetSets, supportedFields: SUPPORTED_FIELDS, diagnostics: [] },
+    value: {
+      target: 'ios',
+      locales,
+      assetSets,
+      supportedFields: SUPPORTED_FIELDS,
+      diagnostics: [],
+    },
   };
 }
 
@@ -77,13 +87,24 @@ async function syncAsync(
   if (request.plan.status === 'no-change') return inspectAsync(request, runtime);
   const access = await runtime.resolveTokenAsync(request.credentials, request.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
-  const context = await resolveContextAsync(request.identity.bundleIdentifier, access.token, runtime);
+  const context = await resolveContextAsync(
+    request.identity.bundleIdentifier,
+    access.token,
+    runtime,
+  );
   if (context === null) return editableRequired();
   for (const step of request.plan.steps) {
     if (step.target !== 'ios') continue;
     const ok =
       step.operation === 'replace-assets'
-        ? await replaceAssetsAsync(request, context, step.locale, step.variant, access.token, runtime)
+        ? await replaceAssetsAsync(
+            request,
+            context,
+            step.locale,
+            step.variant,
+            access.token,
+            runtime,
+          )
         : await writeLocaleAsync(request, context, step.locale, access.token, runtime);
     if (!ok) return failed('APP_STORE_LISTING_SYNC_FAILED');
   }
@@ -99,7 +120,11 @@ async function resolveContextAsync(
   const appId = await findAppIdAsync(bundleIdentifier, token, runtime);
   if (appId === null) return null;
   const [infos, versions] = await Promise.all([
-    readCollectionAsync(`${API}/apps/${encodeURIComponent(appId)}/appInfos?limit=200`, token, runtime),
+    readCollectionAsync(
+      `${API}/apps/${encodeURIComponent(appId)}/appInfos?limit=200`,
+      token,
+      runtime,
+    ),
     readCollectionAsync(
       `${API}/apps/${encodeURIComponent(appId)}/appStoreVersions?filter[platform]=IOS&limit=200`,
       token,
@@ -151,7 +176,8 @@ function findEditableId(values: readonly unknown[], type: string): string | null
       isRecord(value) &&
       value.type === type &&
       isNonEmptyString(value.id) &&
-      (!isRecord(value.attributes) || isEditable(value.attributes.appVersionState ?? value.attributes.state)),
+      (!isRecord(value.attributes) ||
+        isEditable(value.attributes.appVersionState ?? value.attributes.state)),
   );
   return candidates.length > 0 && isRecord(candidates[0]) && isNonEmptyString(candidates[0].id)
     ? candidates[0].id
@@ -198,24 +224,30 @@ function mergeLocales(
   return locales.map((locale) => {
     const info = appInfo.find((item) => item.locale === locale)?.attributes;
     const ver = version.find((item) => item.locale === locale)?.attributes;
+    const summary = readString(info?.subtitle);
+    const privacyPolicyUrl = readString(info?.privacyPolicyUrl);
+    const description = readString(ver?.description);
+    const keywords = readString(ver?.keywords);
+    const promotionalText = readString(ver?.promotionalText);
+    const supportUrl = readString(ver?.supportUrl);
+    const marketingUrl = readString(ver?.marketingUrl);
     return {
       locale,
       name: readString(info?.name) ?? locale,
-      ...(readString(info?.subtitle) === undefined ? {} : { summary: readString(info?.subtitle) }),
-      ...(readString(info?.privacyPolicyUrl) === undefined
+      ...(summary === undefined ? {} : { summary }),
+      ...(privacyPolicyUrl === undefined ? {} : { privacyPolicyUrl }),
+      ...(description === undefined ? {} : { description }),
+      ...(keywords === undefined
         ? {}
-        : { privacyPolicyUrl: readString(info?.privacyPolicyUrl) }),
-      ...(readString(ver?.description) === undefined ? {} : { description: readString(ver?.description) }),
-      ...(readString(ver?.keywords) === undefined
-        ? {}
-        : { keywords: readString(ver?.keywords)?.split(',').map((item) => item.trim()).filter(Boolean) }),
-      ...(readString(ver?.promotionalText) === undefined
-        ? {}
-        : { promotionalText: readString(ver?.promotionalText) }),
-      ...(readString(ver?.supportUrl) === undefined ? {} : { supportUrl: readString(ver?.supportUrl) }),
-      ...(readString(ver?.marketingUrl) === undefined
-        ? {}
-        : { marketingUrl: readString(ver?.marketingUrl) }),
+        : {
+            keywords: keywords
+              .split(',')
+              .map((item) => item.trim())
+              .filter(Boolean),
+          }),
+      ...(promotionalText === undefined ? {} : { promotionalText }),
+      ...(supportUrl === undefined ? {} : { supportUrl }),
+      ...(marketingUrl === undefined ? {} : { marketingUrl }),
     };
   });
 }
@@ -227,13 +259,9 @@ async function readAssetsAsync(
   runtime: AppStoreConnectRuntime,
 ): Promise<readonly StoreListingRemoteAssetSet[] | null> {
   const results = await Promise.all(
-    version.flatMap((localization) =>
-      readScreenshotSetsAsync(localization, token, runtime),
-    ),
+    version.flatMap((localization) => readScreenshotSetsAsync(localization, token, runtime)),
   );
-  return results.some((value) => value === null)
-    ? null
-    : results.flatMap((value) => value ?? []);
+  return results.some((value) => value === null) ? null : results.flatMap((value) => value ?? []);
 }
 
 /*** Reads all screenshot sets for one version localization. */
@@ -257,7 +285,9 @@ async function readScreenshotSetsAsync(
         runtime,
       );
       const hashes = screenshots.flatMap((shot) =>
-        isRecord(shot) && isRecord(shot.attributes) && isNonEmptyString(shot.attributes.sourceFileChecksum)
+        isRecord(shot) &&
+        isRecord(shot.attributes) &&
+        isNonEmptyString(shot.attributes.sourceFileChecksum)
           ? [shot.attributes.sourceFileChecksum]
           : [],
       );
@@ -270,7 +300,7 @@ async function readScreenshotSetsAsync(
       };
     }),
   );
-  return values.every((value): value is StoreListingRemoteAssetSet => value !== null) ? values : null;
+  return values.some((value) => value === null) ? null : values.filter((value) => value !== null);
 }
 
 /*** Writes App Info and version localization metadata for one locale. */
@@ -288,7 +318,9 @@ async function writeLocaleAsync(
   const infoBody = {
     name: desired.name,
     ...(desired.summary === undefined ? {} : { subtitle: desired.summary }),
-    ...(desired.privacyPolicyUrl === undefined ? {} : { privacyPolicyUrl: desired.privacyPolicyUrl }),
+    ...(desired.privacyPolicyUrl === undefined
+      ? {}
+      : { privacyPolicyUrl: desired.privacyPolicyUrl }),
   };
   const versionBody = {
     ...(desired.description === undefined ? {} : { description: desired.description }),
@@ -298,7 +330,15 @@ async function writeLocaleAsync(
     ...(desired.marketingUrl === undefined ? {} : { marketingUrl: desired.marketingUrl }),
   };
   const writes = await Promise.all([
-    writeLocalizationAsync('appInfoLocalizations', info?.id, context.appInfoId, locale, infoBody, token, runtime),
+    writeLocalizationAsync(
+      'appInfoLocalizations',
+      info?.id,
+      context.appInfoId,
+      locale,
+      infoBody,
+      token,
+      runtime,
+    ),
     writeLocalizationAsync(
       'appStoreVersionLocalizations',
       version?.id,
@@ -333,7 +373,11 @@ async function writeLocalizationAsync(
         ...(id === undefined ? {} : { id }),
         attributes: { locale, ...attributes },
         ...(id === undefined
-          ? { relationships: { [relationship]: { data: { type: `${relationship}s`, id: ownerId } } } }
+          ? {
+              relationships: {
+                [relationship]: { data: { type: `${relationship}s`, id: ownerId } },
+              },
+            }
           : {}),
       },
     }),
@@ -366,14 +410,21 @@ async function replaceAssetsAsync(
   const deleted = await Promise.all(
     existing.flatMap((item) =>
       isRecord(item) && isNonEmptyString(item.id)
-        ? [safeRequestAsync(runtime, { method: 'DELETE', url: `${API}/appScreenshots/${encodeURIComponent(item.id)}`, token })]
+        ? [
+            safeRequestAsync(runtime, {
+              method: 'DELETE',
+              url: `${API}/appScreenshots/${encodeURIComponent(item.id)}`,
+              token,
+            }),
+          ]
         : [],
     ),
   );
   if (!deleted.every((response) => response !== null && isSuccess(response.status))) return false;
   for (const asset of desired.assets) {
     const bytes = await request.assets.readAsync(asset.relativePath);
-    if (!(await uploadScreenshotAsync(setId, asset.relativePath, bytes, token, runtime))) return false;
+    if (!(await uploadScreenshotAsync(setId, asset.relativePath, bytes, token, runtime)))
+      return false;
   }
   return true;
 }
@@ -391,7 +442,10 @@ async function ensureScreenshotSetAsync(
     runtime,
   );
   const existing = values.find(
-    (item) => isRecord(item) && isRecord(item.attributes) && item.attributes.screenshotDisplayType === variant,
+    (item) =>
+      isRecord(item) &&
+      isRecord(item.attributes) &&
+      item.attributes.screenshotDisplayType === variant,
   );
   if (isRecord(existing) && isNonEmptyString(existing.id)) return existing.id;
   const response = await safeRequestAsync(runtime, {
@@ -440,7 +494,11 @@ async function uploadScreenshotAsync(
     return false;
   const statuses = await Promise.all(
     value.data.attributes.uploadOperations.flatMap((operation) => {
-      if (!isRecord(operation) || typeof operation.offset !== 'number' || typeof operation.length !== 'number')
+      if (
+        !isRecord(operation) ||
+        typeof operation.offset !== 'number' ||
+        typeof operation.length !== 'number'
+      )
         return [];
       if (!isNonEmptyString(operation.method) || !isNonEmptyString(operation.url)) return [];
       const headers = Array.isArray(operation.requestHeaders)
@@ -488,7 +546,7 @@ async function readCollectionAsync(
 async function safeRequestAsync(
   runtime: AppStoreConnectRuntime,
   request: Parameters<AppStoreConnectRuntime['request']>[0],
-): ReturnType<AppStoreConnectRuntime['request']> | Promise<null> {
+): Promise<Awaited<ReturnType<AppStoreConnectRuntime['request']>> | null> {
   try {
     return await runtime.request(request);
   } catch {
@@ -499,7 +557,10 @@ async function safeRequestAsync(
 /*** Reads a JSON:API resource id. */
 function readResourceId(body: string, type: string): string | null {
   const value = parseJson(body);
-  return isRecord(value) && isRecord(value.data) && value.data.type === type && isNonEmptyString(value.data.id)
+  return isRecord(value) &&
+    isRecord(value.data) &&
+    value.data.type === type &&
+    isNonEmptyString(value.data.id)
     ? value.data.id
     : null;
 }

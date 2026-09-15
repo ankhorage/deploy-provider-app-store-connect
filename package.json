@@ -12,9 +12,21 @@
   "bugs": {
     "url": "https://github.com/ankhorage/deploy-provider-app-store-connect/issues"
   },
-  "keywords": ["ankhorage", "deploy", "provider", "app-store-connect", "ios"],
+  "keywords": [
+    "ankhorage",
+    "deploy",
+    "provider",
+    "app-store-connect",
+    "ios"
+  ],
   "sideEffects": false,
-  "files": ["dist", "README.md", "CHANGELOG.md", "LICENSE", "paradox"],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "paradox"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -22,9 +34,15 @@
     },
     "./package.json": "./package.json"
   },
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=24" },
-  "ankhorage": { "renovateSyncProtocol": 1 },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "ankhorage": {
+    "renovateSyncProtocol": 1
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "check-types": "tsc --noEmit -p tsconfig.json",

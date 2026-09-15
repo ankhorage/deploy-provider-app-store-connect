@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ankhorage/deploy-provider-app-store-connect • Paradox</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f5f7fb;
+        color: #11203b;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      a { color: #2459d3; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      button { font: inherit; }
+      code, pre { font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+        min-height: 100vh;
+      }
+      .sidebar {
+        padding: 1.5rem;
+        border-right: 1px solid #d8dfec;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow: auto;
+      }
+      .content { padding: 2rem; }
+      .panel, .item {
+        background: #ffffff;
+        border: 1px solid #d8dfec;
+        border-radius: 0.9rem;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 24px rgba(17, 32, 59, 0.06);
+      }
+      .summary {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      }
+      .summary strong {
+        display: block;
+        font-size: 1.5rem;
+      }
+      .search {
+        width: 100%;
+        padding: 0.75rem 0.9rem;
+        border-radius: 0.75rem;
+        border: 1px solid #c7d2e5;
+        margin: 1rem 0 1.5rem;
+      }
+      .nav-list, .meta-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .nav-list li + li { margin-top: 0.5rem; }
+      .nav-button {
+        width: 100%;
+        display: block;
+        border: 0;
+        border-radius: 0.7rem;
+        background: transparent;
+        color: #24427a;
+        cursor: pointer;
+        padding: 0.55rem 0.7rem;
+        text-align: left;
+      }
+      .nav-button:hover, .nav-button[aria-current="page"] {
+        background: #e8eefb;
+        text-decoration: none;
+      }
+      .nav-button small {
+        display: block;
+        color: #5e6d8c;
+        margin-top: 0.15rem;
+      }
+      .view[hidden] { display: none; }
+      .muted { color: #5e6d8c; }
+      .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+      .chip {
+        border-radius: 999px;
+        background: #e8eefb;
+        color: #24427a;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.85rem;
+      }
+      table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; }
+      th, td { padding: 0.6rem; border-bottom: 1px solid #e2e7f2; text-align: left; vertical-align: top; }
+      pre {
+        overflow: auto;
+        border-radius: 0.75rem;
+        background: #0f1729;
+        color: #e7edf7;
+        padding: 1rem;
+      }
+      .empty { font-style: italic; color: #6f7f9c; }
+      .mermaid { margin: 1rem 0; overflow: auto; }
+      details > summary { cursor: pointer; color: #5e6d8c; font-size: 0.9rem; margin-top: 0.5rem; user-select: none; }
+      @media (max-width: 900px) {
+        .layout { grid-template-columns: 1fr; }
+        .sidebar { position: static; max-height: none; border-right: 0; border-bottom: 1px solid #d8dfec; }
+        .content { padding: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="muted">Generated with Paradox</p>
+        <h1>@ankhorage/deploy-provider-app-store-connect</h1>
+        <p>App Store Connect deployment provider for Ankhorage application shipment.</p>
+        <input id="search" class="search" type="search" placeholder="Search current view" />
+        <nav aria-label="Documentation sections">
+          <ul class="nav-list">
+            <li>
+              <button class="nav-button" type="button" data-target="home" aria-current="page">
+                Home
+                <small>Overview, CLI, public API, diagrams</small>
+              </button>
+            </li>
+            <li>
+    <button class="nav-button" type="button" data-target="src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts">
+      src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts
+      <small>23 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts">
+      src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts
+      <small>26 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts">
+      src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts
+      <small>1 function</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts">
+      src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts
+      <small>27 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts">
+      src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts
+      <small>3 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts">
+      src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts
+      <small>24 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/index.test.ts">
+      src/index.test.ts
+      <small>2 functions</small>
+    </button>
+  </li><li>
+    <button class="nav-button" type="button" data-target="src/utils/createAppStoreConnectRuntime.ts">
+      src/utils/createAppStoreConnectRuntime.ts
+      <small>10 functions</small>
+    </button>
+  </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <section id="view-home" class="view" data-view="home">
+          
+    <section class="panel">
+      <h2>Package overview</h2>
+      <div class="summary">
+        <div><strong>2</strong><span class="muted">public exports</span></div>
+        <div><strong>0</strong><span class="muted">components</span></div>
+        <div><strong>11</strong><span class="muted">modules</span></div>
+        <div><strong>1</strong><span class="muted">entrypoints</span></div>
+      </div>
+      <h3>Entrypoints</h3>
+      <ul class="meta-list">
+        <li><code>src/index.ts</code></li>
+      </ul>
+    </section>
+    
+    <section class="panel">
+      <h2>Modules</h2>
+      <article class="item" data-search="paradox.config.ts default">
+    <h3>paradox.config.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+    <p><strong>Exports:</strong> <code>default</code></p>
+  </article><article class="item" data-search="src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectIosPublisher">
+    <h3>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectIosPublisher</code></p>
+  </article><article class="item" data-search="src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectMonetizationAdapter">
+    <h3>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectMonetizationAdapter</code></p>
+  </article><article class="item" data-search="src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts src/types/appStoreConnect.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectDeploymentProvider">
+    <h3>src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts</code>, <code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts</code>, <code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts</code>, <code>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts</code>, <code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts</code>, <code>src/types/appStoreConnect.ts</code>, <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectDeploymentProvider</code></p>
+  </article><article class="item" data-search="src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectReleaseAdapter">
+    <h3>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectReleaseAdapter</code></p>
+  </article><article class="item" data-search="src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectSetupAdapter">
+    <h3>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectSetupAdapter</code></p>
+  </article><article class="item" data-search="src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts src/utils/createAppStoreConnectRuntime.ts createAppStoreConnectStoreListingAdapter">
+    <h3>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/utils/createAppStoreConnectRuntime.ts</code></p>
+    <p><strong>Exports:</strong> <code>createAppStoreConnectStoreListingAdapter</code></p>
+  </article><article class="item" data-search="src/index.test.ts src/index.ts">
+    <h3>src/index.test.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/index.ts</code></p>
+    <p><strong>Exports:</strong> <span class="empty">None</span></p>
+  </article><article class="item" data-search="src/index.ts AppStoreConnectDeploymentProviderOptions createAppStoreConnectDeploymentProvider">
+    <h3>src/index.ts</h3>
+    <p class="muted">Configured entrypoint</p>
+    <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+    <p><strong>Exports:</strong> <code>AppStoreConnectDeploymentProviderOptions</code>, <code>createAppStoreConnectDeploymentProvider</code></p>
+  </article><article class="item" data-search="src/types/appStoreConnect.ts AppStoreArtifactDownloader AppStoreConnectApiKeyCredentials AppStoreConnectDeploymentProviderOptions AppStoreConnectRequest AppStoreConnectResponse AppStoreConnectTokenFactory AppStoreConnectTransport AppStoreUploadHeader AppStoreUploadRequest AppStoreUploadTransport">
+    <h3>src/types/appStoreConnect.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+    <p><strong>Exports:</strong> <code>AppStoreArtifactDownloader</code>, <code>AppStoreConnectApiKeyCredentials</code>, <code>AppStoreConnectDeploymentProviderOptions</code>, <code>AppStoreConnectRequest</code>, <code>AppStoreConnectResponse</code>, <code>AppStoreConnectTokenFactory</code>, <code>AppStoreConnectTransport</code>, <code>AppStoreUploadHeader</code>, <code>AppStoreUploadRequest</code>, <code>AppStoreUploadTransport</code></p>
+  </article><article class="item" data-search="src/utils/createAppStoreConnectRuntime.ts src/types/appStoreConnect.ts AppStoreConnectRuntime createAppStoreConnectRuntime">
+    <h3>src/utils/createAppStoreConnectRuntime.ts</h3>
+    <p class="muted">Referenced module</p>
+    <p><strong>Dependencies:</strong> <code>src/types/appStoreConnect.ts</code></p>
+    <p><strong>Exports:</strong> <code>AppStoreConnectRuntime</code>, <code>createAppStoreConnectRuntime</code></p>
+  </article>
+    </section>
+    <section class="panel">
+      <h2>Public API</h2>
+      
+            <section>
+              <h3>src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts</h3>
+              <article class="item" id="symbol-createappstoreconnectdeploymentprovider" data-search="createAppStoreConnectDeploymentProvider function src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts Creates the canonical App Store Connect deployment provider registration.&#10;&#10;monetization, release, and setup capabilities behind the portable deploy-provider contracts. AppStoreConnectDeploymentProviderOptions (options?: AppStoreConnectDeploymentProviderOptions) =&gt; DeploymentProviderRegistration">
+    <h4>createAppStoreConnectDeploymentProvider</h4>
+    <p class="muted">function • <code>src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts:17:1</code></p>
+    <p>Creates the canonical App Store Connect deployment provider registration.
+
+monetization, release, and setup capabilities behind the portable deploy-provider contracts.</p>
+    <p><strong>Export paths:</strong> <code>src/index.ts</code></p>
+    <div><strong>Related symbols:</strong> <ul class="chips"><li class="chip">AppStoreConnectDeploymentProviderOptions</li></ul></div>
+    <div>
+        <h5>Signature</h5>
+        <pre>(options?: AppStoreConnectDeploymentProviderOptions) =&gt; DeploymentProviderRegistration</pre>
+        <table>
+                <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr>
+                        <td><code>options</code></td>
+                        <td><code>AppStoreConnectDeploymentProviderOptions</code></td>
+                        <td>no</td>
+                        <td></td>
+                      </tr>
+                </tbody>
+              </table>
+        <p><strong>Returns:</strong> <code>DeploymentProviderRegistration</code></p>
+      </div>
+    
+  </article>
+            </section>
+            <section>
+              <h3>src/types/appStoreConnect.ts</h3>
+              <article class="item" id="symbol-appstoreconnectdeploymentprovideroptions" data-search="AppStoreConnectDeploymentProviderOptions type src/types/appStoreConnect.ts ">
+    <h4>AppStoreConnectDeploymentProviderOptions</h4>
+    <p class="muted">type • <code>src/types/appStoreConnect.ts:43:1</code></p>
+    
+    <p><strong>Export paths:</strong> <code>src/index.ts</code></p>
+    <div><strong>Related symbols:</strong> <span class="empty">None</span></div>
+    
+    <table>
+    <thead><tr><th>Member</th><th>Kind</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr>
+            <td><code>createToken</code></td>
+            <td>property</td>
+            <td><code>AppStoreConnectTokenFactory</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>downloadArtifact</code></td>
+            <td>property</td>
+            <td><code>AppStoreArtifactDownloader</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>maxAttempts</code></td>
+            <td>property</td>
+            <td><code>number</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>now</code></td>
+            <td>property</td>
+            <td><code>() =&gt; Date</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>request</code></td>
+            <td>property</td>
+            <td><code>AppStoreConnectTransport</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>upload</code></td>
+            <td>property</td>
+            <td><code>AppStoreUploadTransport</code></td>
+            <td>no</td>
+            <td></td>
+          </tr><tr>
+            <td><code>wait</code></td>
+            <td>property</td>
+            <td><code>() =&gt; Promise&lt;void&gt;</code></td>
+            <td>no</td>
+            <td></td>
+          </tr>
+    </tbody>
+  </table>
+  </article>
+            </section>
+    </section>
+    <section class="panel">
+      <h2>Component registry</h2>
+      <p class="empty">No components were detected.</p>
+    </section>
+    <section class="panel">
+      <h2>Diagrams</h2>
+      <article class="item" data-search="Architecture overview diagrams/architecture-overview.mmd">
+    <h3>Architecture overview</h3>
+    <p class="muted"><code>diagrams/architecture-overview.mmd</code></p>
+    <div class="mermaid">graph TD
+  package__ankhorage_deploy_provider_app_store_connect[&quot;@ankhorage/deploy-provider-app-store-connect&quot;]
+  entrypoint_src_index_ts[&quot;src/index.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect --&gt; entrypoint_src_index_ts
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_paradox_config_ts
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_types_appStoreConnect_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_index_test_ts
+  module_src_index_test_ts --&gt; module_src_index_ts
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_types_appStoreConnect_ts
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_utils_createAppStoreConnectRuntime_ts --&gt; module_src_types_appStoreConnect_ts
+</div>
+    <details>
+      <summary>View Mermaid source</summary>
+      <pre>graph TD
+  package__ankhorage_deploy_provider_app_store_connect[&quot;@ankhorage/deploy-provider-app-store-connect&quot;]
+  entrypoint_src_index_ts[&quot;src/index.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect --&gt; entrypoint_src_index_ts
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_paradox_config_ts
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_types_appStoreConnect_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_index_test_ts
+  module_src_index_test_ts --&gt; module_src_index_ts
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_types_appStoreConnect_ts
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  package__ankhorage_deploy_provider_app_store_connect -.-&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_utils_createAppStoreConnectRuntime_ts --&gt; module_src_types_appStoreConnect_ts
+</pre>
+    </details>
+  </article><article class="item" data-search="Module relationships diagrams/module-relationships.mmd">
+    <h3>Module relationships</h3>
+    <p class="muted"><code>diagrams/module-relationships.mmd</code></p>
+    <div class="mermaid">graph LR
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_types_appStoreConnect_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_index_test_ts --&gt; module_src_index_ts
+  module_src_utils_createAppStoreConnectRuntime_ts --&gt; module_src_types_appStoreConnect_ts
+</div>
+    <details>
+      <summary>View Mermaid source</summary>
+      <pre>graph LR
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_types_appStoreConnect_ts
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts --&gt; module_src_utils_createAppStoreConnectRuntime_ts
+  module_src_index_test_ts --&gt; module_src_index_ts
+  module_src_utils_createAppStoreConnectRuntime_ts --&gt; module_src_types_appStoreConnect_ts
+</pre>
+    </details>
+  </article><article class="item" data-search="Export graph diagrams/export-graph.mmd">
+    <h3>Export graph</h3>
+    <p class="muted"><code>diagrams/export-graph.mmd</code></p>
+    <div class="mermaid">graph LR
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  export_AppStoreConnectDeploymentProviderOptions[&quot;AppStoreConnectDeploymentProviderOptions&quot;]
+  module_src_types_appStoreConnect_ts --&gt; export_AppStoreConnectDeploymentProviderOptions
+  export_createAppStoreConnectDeploymentProvider[&quot;createAppStoreConnectDeploymentProvider&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; export_createAppStoreConnectDeploymentProvider
+  export_createAppStoreConnectDeploymentProvider -.-&gt; export_AppStoreConnectDeploymentProviderOptions
+</div>
+    <details>
+      <summary>View Mermaid source</summary>
+      <pre>graph LR
+  module_paradox_config_ts[&quot;paradox.config.ts&quot;]
+  module_src_features_ios_publication_adapters_outbound_createAppStoreConnectIosPublisher_ts[&quot;src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts&quot;]
+  module_src_features_monetization_adapters_outbound_createAppStoreConnectMonetizationAdapter_ts[&quot;src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts[&quot;src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts&quot;]
+  module_src_features_release_adapters_outbound_createAppStoreConnectReleaseAdapter_ts[&quot;src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts&quot;]
+  module_src_features_setup_adapters_outbound_createAppStoreConnectSetupAdapter_ts[&quot;src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts&quot;]
+  module_src_features_store_listing_adapters_outbound_createAppStoreConnectStoreListingAdapter_ts[&quot;src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts&quot;]
+  module_src_index_test_ts[&quot;src/index.test.ts&quot;]
+  module_src_index_ts[&quot;src/index.ts&quot;]
+  module_src_types_appStoreConnect_ts[&quot;src/types/appStoreConnect.ts&quot;]
+  module_src_utils_createAppStoreConnectRuntime_ts[&quot;src/utils/createAppStoreConnectRuntime.ts&quot;]
+  export_AppStoreConnectDeploymentProviderOptions[&quot;AppStoreConnectDeploymentProviderOptions&quot;]
+  module_src_types_appStoreConnect_ts --&gt; export_AppStoreConnectDeploymentProviderOptions
+  export_createAppStoreConnectDeploymentProvider[&quot;createAppStoreConnectDeploymentProvider&quot;]
+  module_src_features_provider_registration_composition_createAppStoreConnectDeploymentProvider_ts --&gt; export_createAppStoreConnectDeploymentProvider
+  export_createAppStoreConnectDeploymentProvider -.-&gt; export_AppStoreConnectDeploymentProviderOptions
+</pre>
+    </details>
+  </article><article class="item" data-search="createAppStoreConnectDeploymentProvider sequence diagrams/sequences/create-app-store-connect-deployment-provider.mmd">
+    <h3>createAppStoreConnectDeploymentProvider sequence</h3>
+    <p class="muted"><code>diagrams/sequences/create-app-store-connect-deployment-provider.mmd</code></p>
+    <div class="mermaid">sequenceDiagram
+  participant participant_createAppStoreConnectDeploymentProvider as createAppStoreConnectDeploymentProvider
+  participant participant_createAppStoreConnectIosPublisher as createAppStoreConnectIosPublisher
+  participant participant_createAppStoreConnectMonetizationAdapter as createAppStoreConnectMonetizationAdapter
+  participant participant_createAppStoreConnectReleaseAdapter as createAppStoreConnectReleaseAdapter
+  participant participant_createAppStoreConnectRuntime as createAppStoreConnectRuntime
+  participant participant_createAppStoreConnectSetupAdapter as createAppStoreConnectSetupAdapter
+  participant participant_createAppStoreConnectStoreListingAdapter as createAppStoreConnectStoreListingAdapter
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectRuntime: createAppStoreConnectRuntime()
+  participant_createAppStoreConnectRuntime--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectSetupAdapter: createAppStoreConnectSetupAdapter()
+  participant_createAppStoreConnectSetupAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectIosPublisher: createAppStoreConnectIosPublisher()
+  participant_createAppStoreConnectIosPublisher--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectStoreListingAdapter: createAppStoreConnectStoreListingAdapter()
+  participant_createAppStoreConnectStoreListingAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectMonetizationAdapter: createAppStoreConnectMonetizationAdapter()
+  participant_createAppStoreConnectMonetizationAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectReleaseAdapter: createAppStoreConnectReleaseAdapter()
+  participant_createAppStoreConnectReleaseAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+</div>
+    <details>
+      <summary>View Mermaid source</summary>
+      <pre>sequenceDiagram
+  participant participant_createAppStoreConnectDeploymentProvider as createAppStoreConnectDeploymentProvider
+  participant participant_createAppStoreConnectIosPublisher as createAppStoreConnectIosPublisher
+  participant participant_createAppStoreConnectMonetizationAdapter as createAppStoreConnectMonetizationAdapter
+  participant participant_createAppStoreConnectReleaseAdapter as createAppStoreConnectReleaseAdapter
+  participant participant_createAppStoreConnectRuntime as createAppStoreConnectRuntime
+  participant participant_createAppStoreConnectSetupAdapter as createAppStoreConnectSetupAdapter
+  participant participant_createAppStoreConnectStoreListingAdapter as createAppStoreConnectStoreListingAdapter
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectRuntime: createAppStoreConnectRuntime()
+  participant_createAppStoreConnectRuntime--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectSetupAdapter: createAppStoreConnectSetupAdapter()
+  participant_createAppStoreConnectSetupAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectIosPublisher: createAppStoreConnectIosPublisher()
+  participant_createAppStoreConnectIosPublisher--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectStoreListingAdapter: createAppStoreConnectStoreListingAdapter()
+  participant_createAppStoreConnectStoreListingAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectMonetizationAdapter: createAppStoreConnectMonetizationAdapter()
+  participant_createAppStoreConnectMonetizationAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+  participant_createAppStoreConnectDeploymentProvider-&gt;&gt;participant_createAppStoreConnectReleaseAdapter: createAppStoreConnectReleaseAdapter()
+  participant_createAppStoreConnectReleaseAdapter--&gt;&gt;participant_createAppStoreConnectDeploymentProvider: return
+</pre>
+    </details>
+  </article>
+    </section>
+        </section>
+        <section id="view-src-features-ios-publication-adapters-outbound-createappstoreconnectiospublisher-ts" class="view" data-view="src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts" hidden>
+    <section class="panel">
+      <h2>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts</h2>
+      <article class="item" data-search="createAppStoreConnectIosPublisher src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates the iOS App Store Connect publisher, inspector, and verifier.">
+    <h3>createAppStoreConnectIosPublisher</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:25:1</code></p>
+    <p>Creates the iOS App Store Connect publisher, inspector, and verifier.</p>
+  </article><article class="item" data-search="inspectAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Inspects the App Store version and attached build for one bundle identifier.">
+    <h3>inspectAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:36:1</code></p>
+    <p>Inspects the App Store version and attached build for one bundle identifier.</p>
+  </article><article class="item" data-search="publishAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Publishes an iOS artifact through Apple&#39;s build-upload API and attaches it to the version.">
+    <h3>publishAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:57:1</code></p>
+    <p>Publishes an iOS artifact through Apple&#39;s build-upload API and attaches it to the version.</p>
+  </article><article class="item" data-search="verifyAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Verifies that the expected App Store version is attached to the published build number.">
+    <h3>verifyAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:88:1</code></p>
+    <p>Verifies that the expected App Store version is attached to the published build number.</p>
+  </article><article class="item" data-search="findAppIdAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Resolves the unique App Store app id for a bundle identifier.">
+    <h3>findAppIdAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:101:1</code></p>
+    <p>Resolves the unique App Store app id for a bundle identifier.</p>
+  </article><article class="item" data-search="readVersionAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Reads one version and its included build, returning null when the version does not exist.">
+    <h3>readVersionAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:132:1</code></p>
+    <p>Reads one version and its included build, returning null when the version does not exist.</p>
+  </article><article class="item" data-search="uploadBuildAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Uploads an IPA and waits until App Store Connect exposes its processed build.">
+    <h3>uploadBuildAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:173:1</code></p>
+    <p>Uploads an IPA and waits until App Store Connect exposes its processed build.</p>
+  </article><article class="item" data-search="createBuildUploadAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates the App Store build-upload container.">
+    <h3>createBuildUploadAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:208:1</code></p>
+    <p>Creates the App Store build-upload container.</p>
+  </article><article class="item" data-search="reserveUploadAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Reserves signed upload operations for the IPA bytes.">
+    <h3>reserveUploadAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:234:1</code></p>
+    <p>Reserves signed upload operations for the IPA bytes.</p>
+  </article><article class="item" data-search="parseUploadOperation src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Parses one signed App Store upload operation.">
+    <h3>parseUploadOperation</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:264:1</code></p>
+    <p>Parses one signed App Store upload operation.</p>
+  </article><article class="item" data-search="waitForBuildAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Polls the build upload until Apple exposes the processed build resource.">
+    <h3>waitForBuildAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:287:1</code></p>
+    <p>Polls the build upload until Apple exposes the processed build resource.</p>
+  </article><article class="item" data-search="ensureVersionAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Ensures an editable App Store version exists for the published version string.">
+    <h3>ensureVersionAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:317:1</code></p>
+    <p>Ensures an editable App Store version exists for the published version string.</p>
+  </article><article class="item" data-search="findVersionIdAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Finds an existing version id, using undefined to represent a missing version.">
+    <h3>findVersionIdAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:341:1</code></p>
+    <p>Finds an existing version id, using undefined to represent a missing version.</p>
+  </article><article class="item" data-search="attachBuildAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Attaches a processed build to an App Store version.">
+    <h3>attachBuildAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:366:1</code></p>
+    <p>Attaches a processed build to an App Store version.</p>
+  </article><article class="item" data-search="safeRequestAsync src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Executes an App Store Connect request while containing transport failures.">
+    <h3>safeRequestAsync</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:382:1</code></p>
+    <p>Executes an App Store Connect request while containing transport failures.</p>
+  </article><article class="item" data-search="readResourceId src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Reads a JSON:API resource id from a response body.">
+    <h3>readResourceId</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:394:1</code></p>
+    <p>Reads a JSON:API resource id from a response body.</p>
+  </article><article class="item" data-search="readRelationshipId src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Reads one relationship resource id from a JSON:API object.">
+    <h3>readRelationshipId</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:405:1</code></p>
+    <p>Reads one relationship resource id from a JSON:API object.</p>
+  </article><article class="item" data-search="parseJson src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Parses JSON without exposing parser exceptions.">
+    <h3>parseJson</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:412:1</code></p>
+    <p>Parses JSON without exposing parser exceptions.</p>
+  </article><article class="item" data-search="isSuccess src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Tests whether an HTTP status code is successful.">
+    <h3>isSuccess</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:421:1</code></p>
+    <p>Tests whether an HTTP status code is successful.</p>
+  </article><article class="item" data-search="appRequired src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates the manual action required when the app is absent.">
+    <h3>appRequired</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:426:1</code></p>
+    <p>Creates the manual action required when the app is absent.</p>
+  </article><article class="item" data-search="publicationAction src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates an iOS publication manual-action result.">
+    <h3>publicationAction</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:440:1</code></p>
+    <p>Creates an iOS publication manual-action result.</p>
+  </article><article class="item" data-search="failedInspection src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates a failed App Store inspection result.">
+    <h3>failedInspection</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:454:1</code></p>
+    <p>Creates a failed App Store inspection result.</p>
+  </article><article class="item" data-search="failedPublication src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts Creates a failed App Store publication result.">
+    <h3>failedPublication</h3>
+    <p class="muted"><code>src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts:467:1</code></p>
+    <p>Creates a failed App Store publication result.</p>
+  </article>
+    </section>
+  </section><section id="view-src-features-monetization-adapters-outbound-createappstoreconnectmonetizationadapter-ts" class="view" data-view="src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts" hidden>
+    <section class="panel">
+      <h2>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts</h2>
+      <article class="item" data-search="createAppStoreConnectMonetizationAdapter src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Creates the App Store Connect monetization adapter for IAPs and subscriptions.">
+    <h3>createAppStoreConnectMonetizationAdapter</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:21:1</code></p>
+    <p>Creates the App Store Connect monetization adapter for IAPs and subscriptions.</p>
+  </article><article class="item" data-search="inspectAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Inspects App Store in-app purchases and subscriptions.">
+    <h3>inspectAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:32:1</code></p>
+    <p>Inspects App Store in-app purchases and subscriptions.</p>
+  </article><article class="item" data-search="syncAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Executes monetization plan steps with idempotent App Store product upserts.">
+    <h3>syncAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:89:1</code></p>
+    <p>Executes monetization plan steps with idempotent App Store product upserts.</p>
+  </article><article class="item" data-search="ensureProductAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Ensures one App Store product, its localization metadata, and subscription family exist.">
+    <h3>ensureProductAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:111:1</code></p>
+    <p>Ensures one App Store product, its localization metadata, and subscription family exist.</p>
+  </article><article class="item" data-search="ensureFamilyAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Finds or creates one App Store subscription group.">
+    <h3>ensureFamilyAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:136:1</code></p>
+    <p>Finds or creates one App Store subscription group.</p>
+  </article><article class="item" data-search="ensureSubscriptionAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Finds or creates one App Store subscription.">
+    <h3>ensureSubscriptionAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:168:1</code></p>
+    <p>Finds or creates one App Store subscription.</p>
+  </article><article class="item" data-search="ensureIapAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Finds or creates one consumable or non-consumable App Store purchase.">
+    <h3>ensureIapAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:205:1</code></p>
+    <p>Finds or creates one consumable or non-consumable App Store purchase.</p>
+  </article><article class="item" data-search="syncSubscriptionLocalizationsAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Synchronizes subscription localizations through the public App Store API.">
+    <h3>syncSubscriptionLocalizationsAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:241:1</code></p>
+    <p>Synchronizes subscription localizations through the public App Store API.</p>
+  </article><article class="item" data-search="syncIapLocalizationsAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Synchronizes in-app-purchase localizations through the public App Store API.">
+    <h3>syncIapLocalizationsAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:268:1</code></p>
+    <p>Synchronizes in-app-purchase localizations through the public App Store API.</p>
+  </article><article class="item" data-search="writeLocalizationAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Creates or patches one monetization localization.">
+    <h3>writeLocalizationAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:295:1</code></p>
+    <p>Creates or patches one monetization localization.</p>
+  </article><article class="item" data-search="normalizeIapAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Normalizes one App Store in-app purchase into the portable observed product model.">
+    <h3>normalizeIapAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:334:1</code></p>
+    <p>Normalizes one App Store in-app purchase into the portable observed product model.</p>
+  </article><article class="item" data-search="normalizeSubscriptionAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Normalizes one subscription relationship into the portable observed product model.">
+    <h3>normalizeSubscriptionAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:352:1</code></p>
+    <p>Normalizes one subscription relationship into the portable observed product model.</p>
+  </article><article class="item" data-search="readLocalizationsAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Reads portable monetization localizations from a provider collection.">
+    <h3>readLocalizationsAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:389:1</code></p>
+    <p>Reads portable monetization localizations from a provider collection.</p>
+  </article><article class="item" data-search="toApplePeriod src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Maps the portable subscription period to Apple&#39;s duration identifier.">
+    <h3>toApplePeriod</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:413:1</code></p>
+    <p>Maps the portable subscription period to Apple&#39;s duration identifier.</p>
+  </article><article class="item" data-search="fromApplePeriod src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Maps Apple&#39;s duration identifier to the portable subscription period.">
+    <h3>fromApplePeriod</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:427:1</code></p>
+    <p>Maps Apple&#39;s duration identifier to the portable subscription period.</p>
+  </article><article class="item" data-search="findAppIdAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Finds the App Store app matching one bundle identifier.">
+    <h3>findAppIdAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:440:1</code></p>
+    <p>Finds the App Store app matching one bundle identifier.</p>
+  </article><article class="item" data-search="readCollectionAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Reads one JSON:API collection.">
+    <h3>readCollectionAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:460:1</code></p>
+    <p>Reads one JSON:API collection.</p>
+  </article><article class="item" data-search="safeRequestAsync src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Executes one provider request while containing transport failures.">
+    <h3>safeRequestAsync</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:472:1</code></p>
+    <p>Executes one provider request while containing transport failures.</p>
+  </article><article class="item" data-search="parseResource src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Reads one JSON:API resource object.">
+    <h3>parseResource</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:484:1</code></p>
+    <p>Reads one JSON:API resource object.</p>
+  </article><article class="item" data-search="readResourceId src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Reads a JSON:API resource id.">
+    <h3>readResourceId</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:490:1</code></p>
+    <p>Reads a JSON:API resource id.</p>
+  </article><article class="item" data-search="readRelationshipId src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Reads one relationship id from a JSON:API resource.">
+    <h3>readRelationshipId</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:496:1</code></p>
+    <p>Reads one relationship id from a JSON:API resource.</p>
+  </article><article class="item" data-search="parseJson src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Parses JSON without exposing parser exceptions.">
+    <h3>parseJson</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:503:1</code></p>
+    <p>Parses JSON without exposing parser exceptions.</p>
+  </article><article class="item" data-search="isSuccess src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Tests whether an HTTP status code is successful.">
+    <h3>isSuccess</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:512:1</code></p>
+    <p>Tests whether an HTTP status code is successful.</p>
+  </article><article class="item" data-search="isObservedProduct src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Narrows nullable observed products.">
+    <h3>isObservedProduct</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:517:1</code></p>
+    <p>Narrows nullable observed products.</p>
+  </article><article class="item" data-search="appRequired src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Creates the manual action required when the App Store app is absent.">
+    <h3>appRequired</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:524:1</code></p>
+    <p>Creates the manual action required when the App Store app is absent.</p>
+  </article><article class="item" data-search="failed src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts Creates a failed App Store monetization result.">
+    <h3>failed</h3>
+    <p class="muted"><code>src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts:538:1</code></p>
+    <p>Creates a failed App Store monetization result.</p>
+  </article>
+    </section>
+  </section><section id="view-src-features-provider-registration-composition-createappstoreconnectdeploymentprovider-ts" class="view" data-view="src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts" hidden>
+    <section class="panel">
+      <h2>src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts</h2>
+      <article class="item" data-search="createAppStoreConnectDeploymentProvider src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts Creates the canonical App Store Connect deployment provider registration.&#10;&#10;monetization, release, and setup capabilities behind the portable deploy-provider contracts.">
+    <h3>createAppStoreConnectDeploymentProvider</h3>
+    <p class="muted"><code>src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts:17:1</code></p>
+    <p>Creates the canonical App Store Connect deployment provider registration.
+
+monetization, release, and setup capabilities behind the portable deploy-provider contracts.</p>
+  </article>
+    </section>
+  </section><section id="view-src-features-release-adapters-outbound-createappstoreconnectreleaseadapter-ts" class="view" data-view="src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts" hidden>
+    <section class="panel">
+      <h2>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts</h2>
+      <article class="item" data-search="createAppStoreConnectReleaseAdapter src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates App Store release inspection, mutation, and lifecycle-control capabilities.">
+    <h3>createAppStoreConnectReleaseAdapter</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:25:1</code></p>
+    <p>Creates App Store release inspection, mutation, and lifecycle-control capabilities.</p>
+  </article><article class="item" data-search="inspectAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Inspects App Store version, release notes, review state, and phased rollout state.">
+    <h3>inspectAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:37:1</code></p>
+    <p>Inspects App Store version, release notes, review state, and phased rollout state.</p>
+  </article><article class="item" data-search="executeStepAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Executes one provider-owned App Store release plan step.">
+    <h3>executeStepAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:79:1</code></p>
+    <p>Executes one provider-owned App Store release plan step.</p>
+  </article><article class="item" data-search="controlAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Executes App Store phased-rollout and review cancellation controls.">
+    <h3>controlAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:110:1</code></p>
+    <p>Executes App Store phased-rollout and review cancellation controls.</p>
+  </article><article class="item" data-search="resolveReleaseContextAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Resolves the matching app and App Store version resource.">
+    <h3>resolveReleaseContextAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:140:1</code></p>
+    <p>Resolves the matching app and App Store version resource.</p>
+  </article><article class="item" data-search="readNotesAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads localized what&#39;s-new notes for a release.">
+    <h3>readNotesAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:173:1</code></p>
+    <p>Reads localized what&#39;s-new notes for a release.</p>
+  </article><article class="item" data-search="readBuildNumberAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads the build number attached to an App Store version.">
+    <h3>readBuildNumberAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:194:1</code></p>
+    <p>Reads the build number attached to an App Store version.</p>
+  </article><article class="item" data-search="readReviewStateAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads the review submission associated with the version.">
+    <h3>readReviewStateAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:212:1</code></p>
+    <p>Reads the review submission associated with the version.</p>
+  </article><article class="item" data-search="readPhasedReleaseAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads the phased-release resource and portable state.">
+    <h3>readPhasedReleaseAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:236:1</code></p>
+    <p>Reads the phased-release resource and portable state.</p>
+  </article><article class="item" data-search="syncNotesAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Synchronizes localized release notes, creating missing localization resources when needed.">
+    <h3>syncNotesAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:263:1</code></p>
+    <p>Synchronizes localized release notes, creating missing localization resources when needed.</p>
+  </article><article class="item" data-search="submitReviewAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates and submits an App Store review submission for the version.">
+    <h3>submitReviewAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:310:1</code></p>
+    <p>Creates and submits an App Store review submission for the version.</p>
+  </article><article class="item" data-search="requestReleaseAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Requests manual release of an approved App Store version.">
+    <h3>requestReleaseAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:357:1</code></p>
+    <p>Requests manual release of an approved App Store version.</p>
+  </article><article class="item" data-search="ensurePhasedReleaseAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Ensures a phased release exists for staged rollout.">
+    <h3>ensurePhasedReleaseAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:377:1</code></p>
+    <p>Ensures a phased release exists for staged rollout.</p>
+  </article><article class="item" data-search="mutatePhasedReleaseAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Applies pause, resume, or cancel control to the phased release.">
+    <h3>mutatePhasedReleaseAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:400:1</code></p>
+    <p>Applies pause, resume, or cancel control to the phased release.</p>
+  </article><article class="item" data-search="cancelReviewAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Cancels the current review submission for one version.">
+    <h3>cancelReviewAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:432:1</code></p>
+    <p>Cancels the current review submission for one version.</p>
+  </article><article class="item" data-search="readCollectionAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads one JSON:API collection.">
+    <h3>readCollectionAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:452:1</code></p>
+    <p>Reads one JSON:API collection.</p>
+  </article><article class="item" data-search="safeRequestAsync src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Executes one provider request while containing transport failures.">
+    <h3>safeRequestAsync</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:464:1</code></p>
+    <p>Executes one provider request while containing transport failures.</p>
+  </article><article class="item" data-search="relationshipMatches src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Tests a JSON:API relationship against a resource id.">
+    <h3>relationshipMatches</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:476:1</code></p>
+    <p>Tests a JSON:API relationship against a resource id.</p>
+  </article><article class="item" data-search="parseResource src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads one JSON:API resource from a response body.">
+    <h3>parseResource</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:484:1</code></p>
+    <p>Reads one JSON:API resource from a response body.</p>
+  </article><article class="item" data-search="readResourceId src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Reads a JSON:API resource id.">
+    <h3>readResourceId</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:490:1</code></p>
+    <p>Reads a JSON:API resource id.</p>
+  </article><article class="item" data-search="parseJson src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Parses JSON without exposing parser exceptions.">
+    <h3>parseJson</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:496:1</code></p>
+    <p>Parses JSON without exposing parser exceptions.</p>
+  </article><article class="item" data-search="isSuccess src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Tests whether an HTTP status is successful.">
+    <h3>isSuccess</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:505:1</code></p>
+    <p>Tests whether an HTTP status is successful.</p>
+  </article><article class="item" data-search="missing src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates the portable missing iOS release state.">
+    <h3>missing</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:510:1</code></p>
+    <p>Creates the portable missing iOS release state.</p>
+  </article><article class="item" data-search="blocked src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates a blocked release mutation.">
+    <h3>blocked</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:522:1</code></p>
+    <p>Creates a blocked release mutation.</p>
+  </article><article class="item" data-search="failedMutation src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates a failed release mutation.">
+    <h3>failedMutation</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:527:1</code></p>
+    <p>Creates a failed release mutation.</p>
+  </article><article class="item" data-search="controlBlocked src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates a blocked release control result before mutation.">
+    <h3>controlBlocked</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:532:1</code></p>
+    <p>Creates a blocked release control result before mutation.</p>
+  </article><article class="item" data-search="failedInspection src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts Creates a failed release inspection result.">
+    <h3>failedInspection</h3>
+    <p class="muted"><code>src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts:537:1</code></p>
+    <p>Creates a failed release inspection result.</p>
+  </article>
+    </section>
+  </section><section id="view-src-features-setup-adapters-outbound-createappstoreconnectsetupadapter-ts" class="view" data-view="src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts" hidden>
+    <section class="panel">
+      <h2>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts</h2>
+      <article class="item" data-search="createAppStoreConnectSetupAdapter src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts Creates App Store Connect setup inspection for iOS publication capabilities.">
+    <h3>createAppStoreConnectSetupAdapter</h3>
+    <p class="muted"><code>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts:9:1</code></p>
+    <p>Creates App Store Connect setup inspection for iOS publication capabilities.</p>
+  </article><article class="item" data-search="ready src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts Creates the authenticated App Store Connect setup state.">
+    <h3>ready</h3>
+    <p class="muted"><code>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts:22:1</code></p>
+    <p>Creates the authenticated App Store Connect setup state.</p>
+  </article><article class="item" data-search="required src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts Creates the setup state when App Store Connect authentication is missing.">
+    <h3>required</h3>
+    <p class="muted"><code>src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts:32:1</code></p>
+    <p>Creates the setup state when App Store Connect authentication is missing.</p>
+  </article>
+    </section>
+  </section><section id="view-src-features-store-listing-adapters-outbound-createappstoreconnectstorelistingadapter-ts" class="view" data-view="src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts" hidden>
+    <section class="panel">
+      <h2>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts</h2>
+      <article class="item" data-search="createAppStoreConnectStoreListingAdapter src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Creates the App Store listing adapter for localized metadata and screenshots.">
+    <h3>createAppStoreConnectStoreListingAdapter</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:41:1</code></p>
+    <p>Creates the App Store listing adapter for localized metadata and screenshots.</p>
+  </article><article class="item" data-search="inspectAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Inspects editable App Store metadata and screenshot checksums.">
+    <h3>inspectAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:52:1</code></p>
+    <p>Inspects editable App Store metadata and screenshot checksums.</p>
+  </article><article class="item" data-search="syncAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Applies a provider-neutral listing plan through App Store Connect JSON:API.">
+    <h3>syncAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:81:1</code></p>
+    <p>Applies a provider-neutral listing plan through App Store Connect JSON:API.</p>
+  </article><article class="item" data-search="resolveContextAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Resolves editable App Info and App Store Version localization containers.">
+    <h3>resolveContextAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:115:1</code></p>
+    <p>Resolves editable App Info and App Store Version localization containers.</p>
+  </article><article class="item" data-search="findAppIdAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Finds the App Store app matching one bundle identifier.">
+    <h3>findAppIdAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:153:1</code></p>
+    <p>Finds the App Store app matching one bundle identifier.</p>
+  </article><article class="item" data-search="findEditableId src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Finds one editable App Store resource id from a collection.">
+    <h3>findEditableId</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:173:1</code></p>
+    <p>Finds one editable App Store resource id from a collection.</p>
+  </article><article class="item" data-search="isEditable src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Determines whether App Store metadata can still be edited.">
+    <h3>isEditable</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:188:1</code></p>
+    <p>Determines whether App Store metadata can still be edited.</p>
+  </article><article class="item" data-search="readLocalizationsAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads localization resources from one App Store Connect collection.">
+    <h3>readLocalizationsAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:203:1</code></p>
+    <p>Reads localization resources from one App Store Connect collection.</p>
+  </article><article class="item" data-search="mergeLocales src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Merges App Info and version localization layers into portable listing locales.">
+    <h3>mergeLocales</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:219:1</code></p>
+    <p>Merges App Info and version localization layers into portable listing locales.</p>
+  </article><article class="item" data-search="readAssetsAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads screenshot sets and their uploaded asset checksums.">
+    <h3>readAssetsAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:256:1</code></p>
+    <p>Reads screenshot sets and their uploaded asset checksums.</p>
+  </article><article class="item" data-search="readScreenshotSetsAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads all screenshot sets for one version localization.">
+    <h3>readScreenshotSetsAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:268:1</code></p>
+    <p>Reads all screenshot sets for one version localization.</p>
+  </article><article class="item" data-search="writeLocaleAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Writes App Info and version localization metadata for one locale.">
+    <h3>writeLocaleAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:307:1</code></p>
+    <p>Writes App Info and version localization metadata for one locale.</p>
+  </article><article class="item" data-search="writeLocalizationAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Creates or patches one App Store localization resource.">
+    <h3>writeLocalizationAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:356:1</code></p>
+    <p>Creates or patches one App Store localization resource.</p>
+  </article><article class="item" data-search="replaceAssetsAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Replaces one App Store screenshot set from desired asset bytes.">
+    <h3>replaceAssetsAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:389:1</code></p>
+    <p>Replaces one App Store screenshot set from desired asset bytes.</p>
+  </article><article class="item" data-search="ensureScreenshotSetAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Finds or creates one screenshot set for a display variant.">
+    <h3>ensureScreenshotSetAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:433:1</code></p>
+    <p>Finds or creates one screenshot set for a display variant.</p>
+  </article><article class="item" data-search="uploadScreenshotAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reserves, uploads, and commits one screenshot asset.">
+    <h3>uploadScreenshotAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:471:1</code></p>
+    <p>Reserves, uploads, and commits one screenshot asset.</p>
+  </article><article class="item" data-search="readCollectionAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads one JSON:API collection as unknown values.">
+    <h3>readCollectionAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:534:1</code></p>
+    <p>Reads one JSON:API collection as unknown values.</p>
+  </article><article class="item" data-search="safeRequestAsync src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Executes one provider request while containing transport failures.">
+    <h3>safeRequestAsync</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:546:1</code></p>
+    <p>Executes one provider request while containing transport failures.</p>
+  </article><article class="item" data-search="readResourceId src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads a JSON:API resource id.">
+    <h3>readResourceId</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:558:1</code></p>
+    <p>Reads a JSON:API resource id.</p>
+  </article><article class="item" data-search="parseJson src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Parses JSON without exposing parser exceptions.">
+    <h3>parseJson</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:569:1</code></p>
+    <p>Parses JSON without exposing parser exceptions.</p>
+  </article><article class="item" data-search="readString src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Reads a string property defensively.">
+    <h3>readString</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:578:1</code></p>
+    <p>Reads a string property defensively.</p>
+  </article><article class="item" data-search="isSuccess src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Tests whether an HTTP status code is successful.">
+    <h3>isSuccess</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:583:1</code></p>
+    <p>Tests whether an HTTP status code is successful.</p>
+  </article><article class="item" data-search="editableRequired src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Returns the manual action required for editable App Store metadata.">
+    <h3>editableRequired</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:588:1</code></p>
+    <p>Returns the manual action required for editable App Store metadata.</p>
+  </article><article class="item" data-search="failed src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts Creates a failed App Store listing result.">
+    <h3>failed</h3>
+    <p class="muted"><code>src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts:602:1</code></p>
+    <p>Creates a failed App Store listing result.</p>
+  </article>
+    </section>
+  </section><section id="view-src-index-test-ts" class="view" data-view="src/index.test.ts" hidden>
+    <section class="panel">
+      <h2>src/index.test.ts</h2>
+      <article class="item" data-search="createToken src/index.test.ts ">
+    <h3>createToken</h3>
+    <p class="muted"><code>src/index.test.ts:10:7</code></p>
+    <p class="empty">No description available.</p>
+  </article><article class="item" data-search="resolveSecret src/index.test.ts ">
+    <h3>resolveSecret</h3>
+    <p class="muted"><code>src/index.test.ts:11:7</code></p>
+    <p class="empty">No description available.</p>
+  </article>
+    </section>
+  </section><section id="view-src-utils-createappstoreconnectruntime-ts" class="view" data-view="src/utils/createAppStoreConnectRuntime.ts" hidden>
+    <section class="panel">
+      <h2>src/utils/createAppStoreConnectRuntime.ts</h2>
+      <article class="item" data-search="createAppStoreConnectRuntime src/utils/createAppStoreConnectRuntime.ts Creates the concrete App Store Connect runtime boundary used by provider features.">
+    <h3>createAppStoreConnectRuntime</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:37:1</code></p>
+    <p>Creates the concrete App Store Connect runtime boundary used by provider features.</p>
+  </article><article class="item" data-search="resolveTokenAsync src/utils/createAppStoreConnectRuntime.ts Resolves API-key credentials and signs an App Store Connect token.">
+    <h3>resolveTokenAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:54:1</code></p>
+    <p>Resolves API-key credentials and signs an App Store Connect token.</p>
+  </article><article class="item" data-search="parseApiKey src/utils/createAppStoreConnectRuntime.ts Parses serialized App Store Connect API-key credentials.">
+    <h3>parseApiKey</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:76:1</code></p>
+    <p>Parses serialized App Store Connect API-key credentials.</p>
+  </article><article class="item" data-search="authenticationRequired src/utils/createAppStoreConnectRuntime.ts Creates the canonical authentication-required provider result fragment.">
+    <h3>authenticationRequired</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:92:1</code></p>
+    <p>Creates the canonical authentication-required provider result fragment.</p>
+  </article><article class="item" data-search="createAppStoreConnectTokenAsync src/utils/createAppStoreConnectRuntime.ts Signs a short-lived ES256 App Store Connect JWT.">
+    <h3>createAppStoreConnectTokenAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:109:1</code></p>
+    <p>Signs a short-lived ES256 App Store Connect JWT.</p>
+  </article><article class="item" data-search="encodeJwtPart src/utils/createAppStoreConnectRuntime.ts Encodes one JWT object as base64url JSON.">
+    <h3>encodeJwtPart</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:134:1</code></p>
+    <p>Encodes one JWT object as base64url JSON.</p>
+  </article><article class="item" data-search="fetchAppStoreConnectAsync src/utils/createAppStoreConnectRuntime.ts Executes an authenticated App Store Connect JSON API request.">
+    <h3>fetchAppStoreConnectAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:139:1</code></p>
+    <p>Executes an authenticated App Store Connect JSON API request.</p>
+  </article><article class="item" data-search="uploadAppStoreAssetAsync src/utils/createAppStoreConnectRuntime.ts Uploads one signed binary App Store asset operation.">
+    <h3>uploadAppStoreAssetAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:155:1</code></p>
+    <p>Uploads one signed binary App Store asset operation.</p>
+  </article><article class="item" data-search="downloadAppStoreArtifactAsync src/utils/createAppStoreConnectRuntime.ts Downloads an iOS build artifact for App Store delivery.">
+    <h3>downloadAppStoreArtifactAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:169:1</code></p>
+    <p>Downloads an iOS build artifact for App Store delivery.</p>
+  </article><article class="item" data-search="defaultWaitAsync src/utils/createAppStoreConnectRuntime.ts Waits between App Store Connect processing polls.">
+    <h3>defaultWaitAsync</h3>
+    <p class="muted"><code>src/utils/createAppStoreConnectRuntime.ts:179:1</code></p>
+    <p>Waits between App Store Connect processing polls.</p>
+  </article>
+    </section>
+  </section>
+      </main>
+    </div>
+    <script>
+      const search = document.getElementById('search');
+      const navButtons = Array.from(document.querySelectorAll('[data-target]'));
+      const views = Array.from(document.querySelectorAll('[data-view]'));
+
+      function getActiveView() {
+        return document.querySelector('[data-view]:not([hidden])');
+      }
+
+      function applySearch() {
+        const value = search?.value.trim().toLowerCase() || '';
+        const activeView = getActiveView();
+        const items = Array.from(activeView?.querySelectorAll('[data-search]') || []);
+
+        for (const item of items) {
+          const haystack = (item.getAttribute('data-search') || '').toLowerCase();
+          item.style.display = value === '' || haystack.includes(value) ? '' : 'none';
+        }
+      }
+
+      for (const button of navButtons) {
+        button.addEventListener('click', () => {
+          const target = button.getAttribute('data-target');
+
+          for (const view of views) {
+            view.hidden = view.getAttribute('data-view') !== target;
+          }
+
+          for (const item of navButtons) {
+            item.setAttribute('aria-current', item === button ? 'page' : 'false');
+          }
+
+          if (search) search.value = '';
+          applySearch();
+        });
+      }
+
+      search?.addEventListener('input', applySearch);
+    </script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>

@@ -39,7 +39,11 @@ async function inspectAsync(
   const appId = await findAppIdAsync(context.identity.bundleIdentifier, access.token, runtime);
   if (appId === null) return appRequired();
   const [iapValues, groupValues] = await Promise.all([
-    readCollectionAsync(`${API}/apps/${encodeURIComponent(appId)}/inAppPurchasesV2?limit=200`, access.token, runtime),
+    readCollectionAsync(
+      `${API}/apps/${encodeURIComponent(appId)}/inAppPurchasesV2?limit=200`,
+      access.token,
+      runtime,
+    ),
     readCollectionAsync(
       `${API}/apps/${encodeURIComponent(appId)}/subscriptionGroups?include=subscriptions&limit=200&limit[subscriptions]=200`,
       access.token,
@@ -47,7 +51,10 @@ async function inspectAsync(
     ),
   ]);
   const families = groupValues.flatMap((value) =>
-    isRecord(value) && isNonEmptyString(value.id) && isRecord(value.attributes) && isNonEmptyString(value.attributes.referenceName)
+    isRecord(value) &&
+    isNonEmptyString(value.id) &&
+    isRecord(value.attributes) &&
+    isNonEmptyString(value.attributes.referenceName)
       ? [{ id: value.id, name: value.attributes.referenceName }]
       : [],
   );
@@ -59,9 +66,13 @@ async function inspectAsync(
       ? group.relationships.subscriptions.data
       : [],
   );
-  const iaps = await Promise.all(iapValues.map((value) => normalizeIapAsync(value, access.token, runtime)));
+  const iaps = await Promise.all(
+    iapValues.map((value) => normalizeIapAsync(value, access.token, runtime)),
+  );
   const subscriptions = await Promise.all(
-    includedSubscriptions.map((value) => normalizeSubscriptionAsync(value, families, access.token, runtime)),
+    includedSubscriptions.map((value) =>
+      normalizeSubscriptionAsync(value, families, access.token, runtime),
+    ),
   );
   return {
     status: 'completed',
@@ -104,10 +115,18 @@ async function ensureProductAsync(
   runtime: AppStoreConnectRuntime,
 ): Promise<boolean> {
   if (product.kind === 'subscription') {
-    const familyId = await ensureFamilyAsync(appId, product.subscription?.family ?? product.id, token, runtime);
+    const familyId = await ensureFamilyAsync(
+      appId,
+      product.subscription?.family ?? product.id,
+      token,
+      runtime,
+    );
     if (familyId === null) return false;
     const subscriptionId = await ensureSubscriptionAsync(familyId, product, token, runtime);
-    return subscriptionId !== null && syncSubscriptionLocalizationsAsync(subscriptionId, product.localizations, token, runtime);
+    return (
+      subscriptionId !== null &&
+      syncSubscriptionLocalizationsAsync(subscriptionId, product.localizations, token, runtime)
+    );
   }
   const iapId = await ensureIapAsync(appId, product, token, runtime);
   return iapId !== null && syncIapLocalizationsAsync(iapId, product.localizations, token, runtime);
@@ -120,9 +139,14 @@ async function ensureFamilyAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<string | null> {
-  const groups = await readCollectionAsync(`${API}/apps/${encodeURIComponent(appId)}/subscriptionGroups?limit=200`, token, runtime);
+  const groups = await readCollectionAsync(
+    `${API}/apps/${encodeURIComponent(appId)}/subscriptionGroups?limit=200`,
+    token,
+    runtime,
+  );
   const existing = groups.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.referenceName === family,
+    (value) =>
+      isRecord(value) && isRecord(value.attributes) && value.attributes.referenceName === family,
   );
   if (isRecord(existing) && isNonEmptyString(existing.id)) return existing.id;
   const response = await safeRequestAsync(runtime, {
@@ -147,9 +171,14 @@ async function ensureSubscriptionAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<string | null> {
-  const values = await readCollectionAsync(`${API}/subscriptionGroups/${encodeURIComponent(familyId)}/subscriptions?limit=200`, token, runtime);
+  const values = await readCollectionAsync(
+    `${API}/subscriptionGroups/${encodeURIComponent(familyId)}/subscriptions?limit=200`,
+    token,
+    runtime,
+  );
   const existing = values.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.productId === product.id,
+    (value) =>
+      isRecord(value) && isRecord(value.attributes) && value.attributes.productId === product.id,
   );
   if (isRecord(existing) && isNonEmptyString(existing.id)) return existing.id;
   const response = await safeRequestAsync(runtime, {
@@ -179,9 +208,14 @@ async function ensureIapAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<string | null> {
-  const values = await readCollectionAsync(`${API}/apps/${encodeURIComponent(appId)}/inAppPurchasesV2?limit=200`, token, runtime);
+  const values = await readCollectionAsync(
+    `${API}/apps/${encodeURIComponent(appId)}/inAppPurchasesV2?limit=200`,
+    token,
+    runtime,
+  );
   const existing = values.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.productId === product.id,
+    (value) =>
+      isRecord(value) && isRecord(value.attributes) && value.attributes.productId === product.id,
   );
   if (isRecord(existing) && isNonEmptyString(existing.id)) return existing.id;
   const response = await safeRequestAsync(runtime, {
@@ -210,10 +244,21 @@ async function syncSubscriptionLocalizationsAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<boolean> {
-  const existing = await readCollectionAsync(`${API}/subscriptions/${encodeURIComponent(subscriptionId)}/localizations?limit=200`, token, runtime);
+  const existing = await readCollectionAsync(
+    `${API}/subscriptions/${encodeURIComponent(subscriptionId)}/localizations?limit=200`,
+    token,
+    runtime,
+  );
   const writes = await Promise.all(
     localizations.map((localization) =>
-      writeLocalizationAsync('subscriptionLocalizations', subscriptionId, localization, existing, token, runtime),
+      writeLocalizationAsync(
+        'subscriptionLocalizations',
+        subscriptionId,
+        localization,
+        existing,
+        token,
+        runtime,
+      ),
     ),
   );
   return writes.every(Boolean);
@@ -226,10 +271,21 @@ async function syncIapLocalizationsAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<boolean> {
-  const existing = await readCollectionAsync(`${API_V2}/inAppPurchases/${encodeURIComponent(iapId)}/localizations?limit=200`, token, runtime);
+  const existing = await readCollectionAsync(
+    `${API_V2}/inAppPurchases/${encodeURIComponent(iapId)}/localizations?limit=200`,
+    token,
+    runtime,
+  );
   const writes = await Promise.all(
     localizations.map((localization) =>
-      writeLocalizationAsync('inAppPurchaseLocalizations', iapId, localization, existing, token, runtime),
+      writeLocalizationAsync(
+        'inAppPurchaseLocalizations',
+        iapId,
+        localization,
+        existing,
+        token,
+        runtime,
+      ),
     ),
   );
   return writes.every(Boolean);
@@ -245,15 +301,16 @@ async function writeLocalizationAsync(
   runtime: AppStoreConnectRuntime,
 ): Promise<boolean> {
   const current = existing.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.locale === localization.locale,
+    (value) =>
+      isRecord(value) &&
+      isRecord(value.attributes) &&
+      value.attributes.locale === localization.locale,
   );
   const id = isRecord(current) && isNonEmptyString(current.id) ? current.id : undefined;
   const ownerType = type === 'inAppPurchaseLocalizations' ? 'inAppPurchaseV2' : 'subscription';
   const response = await safeRequestAsync(runtime, {
     method: id === undefined ? 'POST' : 'PATCH',
-    url: id === undefined
-      ? `${API_V2}/${type}`
-      : `${API_V2}/${type}/${encodeURIComponent(id)}`,
+    url: id === undefined ? `${API_V2}/${type}` : `${API_V2}/${type}/${encodeURIComponent(id)}`,
     token,
     body: JSON.stringify({
       data: {
@@ -286,7 +343,8 @@ async function normalizeIapAsync(
     token,
     runtime,
   );
-  const kind = value.attributes.inAppPurchaseType === 'CONSUMABLE' ? 'consumable' : 'non-consumable';
+  const kind =
+    value.attributes.inAppPurchaseType === 'CONSUMABLE' ? 'consumable' : 'non-consumable';
   return { id: value.attributes.productId, kind, localizations };
 }
 
@@ -298,16 +356,26 @@ async function normalizeSubscriptionAsync(
   runtime: AppStoreConnectRuntime,
 ): Promise<MonetizationObservedProduct | null> {
   if (!isRecord(value) || !isNonEmptyString(value.id)) return null;
-  const response = await safeRequestAsync(runtime, { method: 'GET', url: `${API}/subscriptions/${encodeURIComponent(value.id)}`, token });
+  const response = await safeRequestAsync(runtime, {
+    method: 'GET',
+    url: `${API}/subscriptions/${encodeURIComponent(value.id)}`,
+    token,
+  });
   const resource = response === null ? null : parseResource(response.body);
-  if (resource === null || !isRecord(resource.attributes) || !isNonEmptyString(resource.attributes.productId)) return null;
+  if (
+    resource === null ||
+    !isRecord(resource.attributes) ||
+    !isNonEmptyString(resource.attributes.productId)
+  )
+    return null;
   const localizations = await readLocalizationsAsync(
     `${API}/subscriptions/${encodeURIComponent(value.id)}/localizations?limit=200`,
     token,
     runtime,
   );
   const familyId = readRelationshipId(resource.relationships, 'group', 'subscriptionGroups');
-  const family = families.find((item) => item.id === familyId)?.name ?? resource.attributes.productId;
+  const family =
+    families.find((item) => item.id === familyId)?.name ?? resource.attributes.productId;
   const period = fromApplePeriod(resource.attributes.subscriptionPeriod);
   return {
     id: resource.attributes.productId,
@@ -330,20 +398,42 @@ async function readLocalizationsAsync(
     isNonEmptyString(value.attributes.locale) &&
     isNonEmptyString(value.attributes.name) &&
     typeof value.attributes.description === 'string'
-      ? [{ locale: value.attributes.locale, name: value.attributes.name, description: value.attributes.description }]
+      ? [
+          {
+            locale: value.attributes.locale,
+            name: value.attributes.name,
+            description: value.attributes.description,
+          },
+        ]
       : [],
   );
 }
 
 /*** Maps the portable subscription period to Apple's duration identifier. */
 function toApplePeriod(period: MonetizationSubscriptionPeriod): string {
-  return ({ P1W: 'ONE_WEEK', P1M: 'ONE_MONTH', P2M: 'TWO_MONTHS', P3M: 'THREE_MONTHS', P6M: 'SIX_MONTHS', P1Y: 'ONE_YEAR' } as const)[period];
+  return (
+    {
+      P1W: 'ONE_WEEK',
+      P1M: 'ONE_MONTH',
+      P2M: 'TWO_MONTHS',
+      P3M: 'THREE_MONTHS',
+      P6M: 'SIX_MONTHS',
+      P1Y: 'ONE_YEAR',
+    } as const
+  )[period];
 }
 
 /*** Maps Apple's duration identifier to the portable subscription period. */
 function fromApplePeriod(value: unknown): MonetizationSubscriptionPeriod | null {
-  const entry = Object.entries({ P1W: 'ONE_WEEK', P1M: 'ONE_MONTH', P2M: 'TWO_MONTHS', P3M: 'THREE_MONTHS', P6M: 'SIX_MONTHS', P1Y: 'ONE_YEAR' } as const).find(([, apple]) => apple === value);
-  return entry?.[0] as MonetizationSubscriptionPeriod | undefined ?? null;
+  const entry = Object.entries({
+    P1W: 'ONE_WEEK',
+    P1M: 'ONE_MONTH',
+    P2M: 'TWO_MONTHS',
+    P3M: 'THREE_MONTHS',
+    P6M: 'SIX_MONTHS',
+    P1Y: 'ONE_YEAR',
+  } as const).find(([, apple]) => apple === value);
+  return (entry?.[0] as MonetizationSubscriptionPeriod | undefined) ?? null;
 }
 
 /*** Finds the App Store app matching one bundle identifier. */
@@ -352,9 +442,16 @@ async function findAppIdAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<string | null> {
-  const values = await readCollectionAsync(`${API}/apps?filter[bundleId]=${encodeURIComponent(bundleIdentifier)}&limit=2`, token, runtime);
+  const values = await readCollectionAsync(
+    `${API}/apps?filter[bundleId]=${encodeURIComponent(bundleIdentifier)}&limit=2`,
+    token,
+    runtime,
+  );
   const match = values.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.bundleId === bundleIdentifier,
+    (value) =>
+      isRecord(value) &&
+      isRecord(value.attributes) &&
+      value.attributes.bundleId === bundleIdentifier,
   );
   return isRecord(match) && isNonEmptyString(match.id) ? match.id : null;
 }
@@ -375,7 +472,7 @@ async function readCollectionAsync(
 async function safeRequestAsync(
   runtime: AppStoreConnectRuntime,
   request: Parameters<AppStoreConnectRuntime['request']>[0],
-): ReturnType<AppStoreConnectRuntime['request']> | Promise<null> {
+): Promise<Awaited<ReturnType<AppStoreConnectRuntime['request']>> | null> {
   try {
     return await runtime.request(request);
   } catch {
@@ -398,7 +495,7 @@ function readResourceId(body: string, type: string): string | null {
 /*** Reads one relationship id from a JSON:API resource. */
 function readRelationshipId(value: unknown, name: string, type: string): string | null {
   if (!isRecord(value) || !isRecord(value[name]) || !isRecord(value[name].data)) return null;
-  const data = value[name].data;
+  const { data } = value[name];
   return data.type === type && isNonEmptyString(data.id) ? data.id : null;
 }
 
@@ -417,7 +514,9 @@ function isSuccess(status: number): boolean {
 }
 
 /*** Narrows nullable observed products. */
-function isObservedProduct(value: MonetizationObservedProduct | null): value is MonetizationObservedProduct {
+function isObservedProduct(
+  value: MonetizationObservedProduct | null,
+): value is MonetizationObservedProduct {
   return value !== null;
 }
 

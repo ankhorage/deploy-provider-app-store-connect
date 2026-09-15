@@ -162,9 +162,7 @@ async function readVersionAsync(
   const buildId = readRelationshipId(match.relationships, 'build', 'builds');
   if (buildId === null) return { version, buildNumber: null };
   const build = Array.isArray(value.included)
-    ? value.included.find(
-        (item) => isRecord(item) && item.type === 'builds' && item.id === buildId,
-      )
+    ? value.included.find((item) => isRecord(item) && item.type === 'builds' && item.id === buildId)
     : undefined;
   return isRecord(build) && isRecord(build.attributes) && isNonEmptyString(build.attributes.version)
     ? { version, buildNumber: build.attributes.version }
@@ -276,7 +274,13 @@ function parseUploadOperation(value: unknown): UploadOperation | null {
           : [],
       )
     : [];
-  return { offset: value.offset, length: value.length, method: value.method, url: value.url, headers };
+  return {
+    offset: value.offset,
+    length: value.length,
+    method: value.method,
+    url: value.url,
+    headers,
+  };
 }
 
 /*** Polls the build upload until Apple exposes the processed build resource. */
@@ -349,7 +353,8 @@ async function findVersionIdAsync(
   const value = parseJson(response.body);
   if (!isRecord(value) || !Array.isArray(value.data)) return null;
   const matches = value.data.filter(
-    (item) => isRecord(item) && isRecord(item.attributes) && item.attributes.versionString === version,
+    (item) =>
+      isRecord(item) && isRecord(item.attributes) && item.attributes.versionString === version,
   );
   if (matches.length === 0) return undefined;
   return matches.length === 1 && isRecord(matches[0]) && isNonEmptyString(matches[0].id)
@@ -377,7 +382,7 @@ async function attachBuildAsync(
 async function safeRequestAsync(
   runtime: AppStoreConnectRuntime,
   request: Parameters<AppStoreConnectRuntime['request']>[0],
-): ReturnType<AppStoreConnectRuntime['request']> | Promise<null> {
+): Promise<Awaited<ReturnType<AppStoreConnectRuntime['request']>> | null> {
   try {
     return await runtime.request(request);
   } catch {
@@ -399,7 +404,7 @@ function readResourceId(body: string, type: string): string | null {
 /*** Reads one relationship resource id from a JSON:API object. */
 function readRelationshipId(value: unknown, name: string, type: string): string | null {
   if (!isRecord(value) || !isRecord(value[name]) || !isRecord(value[name].data)) return null;
-  const data = value[name].data;
+  const { data } = value[name];
   return data.type === type && isNonEmptyString(data.id) ? data.id : null;
 }
 

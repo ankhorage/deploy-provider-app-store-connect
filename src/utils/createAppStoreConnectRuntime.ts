@@ -157,7 +157,11 @@ async function uploadAppStoreAssetAsync(
 ): ReturnType<AppStoreUploadTransport> {
   const headers = new Headers();
   request.headers.forEach((header) => headers.append(header.name, header.value));
-  const response = await fetch(request.url, { method: request.method, headers, body: request.body });
+  const response = await fetch(request.url, {
+    method: request.method,
+    headers,
+    body: request.body,
+  });
   return response.status;
 }
 

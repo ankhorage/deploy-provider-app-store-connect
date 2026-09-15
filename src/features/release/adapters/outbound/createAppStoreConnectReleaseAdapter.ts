@@ -38,7 +38,8 @@ async function inspectAsync(
   request: ReleaseInspectionRequest,
   runtime: AppStoreConnectRuntime,
 ): Promise<DeploymentProviderResult<ReleaseObservedIosState>> {
-  if (request.identity.target !== 'ios') return failedInspection('APP_STORE_RELEASE_IDENTITY_INVALID');
+  if (request.identity.target !== 'ios')
+    return failedInspection('APP_STORE_RELEASE_IDENTITY_INVALID');
   const access = await runtime.resolveTokenAsync(request.credentials, request.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
   const context = await resolveReleaseContextAsync(
@@ -65,7 +66,9 @@ async function inspectAsync(
       ...(typeof attributes.appVersionState === 'string'
         ? { appVersionState: attributes.appVersionState }
         : {}),
-      ...(typeof attributes.releaseType === 'string' ? { releaseType: attributes.releaseType } : {}),
+      ...(typeof attributes.releaseType === 'string'
+        ? { releaseType: attributes.releaseType }
+        : {}),
       ...(review.state === undefined ? {} : { reviewState: review.state }),
       phasedReleaseState: phased.state,
     },
@@ -122,7 +125,12 @@ async function controlAsync(
   const result =
     request.control.action === 'cancel-review'
       ? await cancelReviewAsync(context.appId, context.versionId, access.token, runtime)
-      : await mutatePhasedReleaseAsync(context.versionId, request.control.action, access.token, runtime);
+      : await mutatePhasedReleaseAsync(
+          context.versionId,
+          request.control.action,
+          access.token,
+          runtime,
+        );
   return result
     ? { status: 'completed', mutationAttempted: true }
     : { status: 'failed', mutationAttempted: true, code: 'APP_STORE_RELEASE_CONTROL_FAILED' };
@@ -141,7 +149,10 @@ async function resolveReleaseContextAsync(
     runtime,
   );
   const app = apps.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.bundleId === bundleIdentifier,
+    (value) =>
+      isRecord(value) &&
+      isRecord(value.attributes) &&
+      value.attributes.bundleId === bundleIdentifier,
   );
   if (!isRecord(app) || !isNonEmptyString(app.id)) return null;
   const versions = await readCollectionAsync(
@@ -150,7 +161,8 @@ async function resolveReleaseContextAsync(
     runtime,
   );
   const item = versions.find(
-    (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.versionString === version,
+    (value) =>
+      isRecord(value) && isRecord(value.attributes) && value.attributes.versionString === version,
   );
   return isRecord(item) && isNonEmptyString(item.id)
     ? { appId: app.id, versionId: item.id, version: item }
@@ -208,7 +220,9 @@ async function readReviewStateAsync(
     token,
     runtime,
   );
-  const match = values.find((value) => relationshipMatches(value, 'appStoreVersionForReview', versionId));
+  const match = values.find((value) =>
+    relationshipMatches(value, 'appStoreVersionForReview', versionId),
+  );
   if (!isRecord(match)) return {};
   return {
     ...(isNonEmptyString(match.id) ? { id: match.id } : {}),
@@ -260,7 +274,8 @@ async function syncNotesAsync(
   const results = await Promise.all(
     request.desired.notes.map(async (note) => {
       const current = existing.find(
-        (value) => isRecord(value) && isRecord(value.attributes) && value.attributes.locale === note.locale,
+        (value) =>
+          isRecord(value) && isRecord(value.attributes) && value.attributes.locale === note.locale,
       );
       const id = isRecord(current) && isNonEmptyString(current.id) ? current.id : undefined;
       const response = await safeRequestAsync(runtime, {
@@ -309,7 +324,8 @@ async function submitReviewAsync(
       },
     }),
   });
-  const submissionId = created?.status === 201 ? readResourceId(created.body, 'reviewSubmissions') : null;
+  const submissionId =
+    created?.status === 201 ? readResourceId(created.body, 'reviewSubmissions') : null;
   if (submissionId === null) return false;
   const item = await safeRequestAsync(runtime, {
     method: 'POST',
@@ -448,7 +464,7 @@ async function readCollectionAsync(
 async function safeRequestAsync(
   runtime: AppStoreConnectRuntime,
   request: Parameters<AppStoreConnectRuntime['request']>[0],
-): ReturnType<AppStoreConnectRuntime['request']> | Promise<null> {
+): Promise<Awaited<ReturnType<AppStoreConnectRuntime['request']>> | null> {
   try {
     return await runtime.request(request);
   } catch {
