@@ -1,6 +1,6 @@
 {
   "name": "@ankhorage/deploy-provider-app-store-connect",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "App Store Connect deployment provider for Ankhorage application shipment.",
   "license": "MIT",
