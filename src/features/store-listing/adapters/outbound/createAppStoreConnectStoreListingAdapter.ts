@@ -76,8 +76,9 @@ async function syncAsync(
 ): Promise<DeploymentProviderResult<StoreListingTargetState>> {
   if (request.identity.target !== 'ios') return failed('APP_STORE_LISTING_IDENTITY_INVALID');
   if (request.plan.status === 'blocked') return failed('APP_STORE_LISTING_PLAN_BLOCKED');
-  if (request.plan.status === 'no-change')
+  if (request.plan.status === 'no-change') {
     return inspectAsync(request, runtime, metadata, screenshots);
+  }
   const access = await runtime.resolveTokenAsync(request.credentials, request.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
   const initial = await metadata.resolveContextAsync(
@@ -85,37 +86,64 @@ async function syncAsync(
     access.token,
   );
   if (initial === null) return editableRequired();
-  for (const step of request.plan.steps.filter((value) => value.operation !== 'replace-assets')) {
-    if (step.target !== 'ios') continue;
-    const desired = request.desired.locales.find((value) => value.locale === step.locale);
-    if (desired === undefined || !(await metadata.writeLocaleAsync(initial, desired, access.token)))
-      return failed('APP_STORE_LISTING_SYNC_FAILED');
-  }
+  const metadataSynced = await syncMetadataAsync(request, initial, access.token, metadata);
+  if (!metadataSynced) return failed('APP_STORE_LISTING_SYNC_FAILED');
   const refreshed = await metadata.resolveContextAsync(
     request.identity.bundleIdentifier,
     access.token,
   );
   if (refreshed === null) return editableRequired();
+  const assetsSynced = await syncAssetsAsync(request, refreshed.version, access.token, screenshots);
+  if (!assetsSynced) return failed('APP_STORE_LISTING_SYNC_FAILED');
+  return inspectAsync(request, runtime, metadata, screenshots);
+}
+
+/*** Synchronizes non-asset listing plan steps. */
+async function syncMetadataAsync(
+  request: StoreListingSyncRequest,
+  context: NonNullable<Awaited<ReturnType<MetadataApi['resolveContextAsync']>>>,
+  token: string,
+  metadata: MetadataApi,
+): Promise<boolean> {
+  for (const step of request.plan.steps.filter((value) => value.operation !== 'replace-assets')) {
+    if (step.target !== 'ios') continue;
+    const desired = request.desired.locales.find((value) => value.locale === step.locale);
+    if (desired === undefined || !(await metadata.writeLocaleAsync(context, desired, token))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/*** Synchronizes screenshot replacement plan steps. */
+async function syncAssetsAsync(
+  request: StoreListingSyncRequest,
+  localizations: readonly NonNullable<
+    Awaited<ReturnType<MetadataApi['resolveContextAsync']>>
+  >['version'],
+  token: string,
+  screenshots: ScreenshotApi,
+): Promise<boolean> {
   for (const step of request.plan.steps.filter((value) => value.operation === 'replace-assets')) {
     if (step.target !== 'ios' || step.variant === undefined) continue;
-    const localization = refreshed.version.find((value) => value.locale === step.locale);
+    const localization = localizations.find((value) => value.locale === step.locale);
     const desired = request.desired.assetSets.find(
       (value) =>
         value.target === 'ios' && value.locale === step.locale && value.variant === step.variant,
     );
+    if (localization === undefined || desired === undefined) return false;
     if (
-      localization === undefined ||
-      desired === undefined ||
       !(await screenshots.replaceAssetsAsync({
         request,
         localization,
         desired,
-        token: access.token,
+        token,
       }))
-    )
-      return failed('APP_STORE_LISTING_SYNC_FAILED');
+    ) {
+      return false;
+    }
   }
-  return inspectAsync(request, runtime, metadata, screenshots);
+  return true;
 }
 
 /*** Returns the manual action required for editable App Store metadata. */
