@@ -33,8 +33,7 @@ export function createAppStoreConnectReleaseInspectionApi(
       resolveContextAsync(bundleIdentifier, version, token, runtime),
     readNotesAsync: (versionId, token) => readNotesAsync(versionId, token, runtime),
     readBuildNumberAsync: (versionId, token) => readBuildNumberAsync(versionId, token, runtime),
-    readReviewAsync: (appId, versionId, token) =>
-      readReviewAsync(appId, versionId, token, runtime),
+    readReviewAsync: (appId, versionId, token) => readReviewAsync(appId, versionId, token, runtime),
     readPhasedAsync: (versionId, token) => readPhasedAsync(versionId, token, runtime),
   };
 }
@@ -63,9 +62,7 @@ async function resolveContextAsync(
 /*** Checks whether a JSON:API version resource matches the requested version. */
 function matchesVersion(value: unknown, version: string): boolean {
   return (
-    isRecord(value) &&
-    isRecord(value.attributes) &&
-    value.attributes.versionString === version
+    isRecord(value) && isRecord(value.attributes) && value.attributes.versionString === version
   );
 }
 
@@ -137,7 +134,7 @@ async function readReviewAsync(
 function reviewMatchesVersion(value: unknown, versionId: string): boolean {
   if (!isRecord(value) || !isRecord(value.relationships)) return false;
   if (!isRecord(value.relationships.appStoreVersionForReview)) return false;
-  const data = value.relationships.appStoreVersionForReview.data;
+  const { data } = value.relationships.appStoreVersionForReview;
   return isRecord(data) && data.id === versionId;
 }
 
@@ -164,9 +161,7 @@ async function readPhasedAsync(
 }
 
 /*** Normalizes an App Store phased-release state to the portable contract. */
-function normalizePhasedState(
-  value: unknown,
-): AppStorePhasedReleaseState['state'] {
+function normalizePhasedState(value: unknown): AppStorePhasedReleaseState['state'] {
   return value === 'INACTIVE' || value === 'ACTIVE' || value === 'PAUSED' || value === 'COMPLETE'
     ? value
     : null;
@@ -181,9 +176,7 @@ async function readCollectionAsync(
   const response = await safeRequestAsync(runtime, { method: 'GET', url, token });
   if (response === null || !isSuccess(response.status)) return null;
   const root = parseJson(response.body);
-  return isRecord(root) && Array.isArray(root.data)
-    ? root.data.map((item: unknown) => item)
-    : null;
+  return isRecord(root) && Array.isArray(root.data) ? root.data.map((item: unknown) => item) : null;
 }
 
 /*** Executes one App Store request while containing transport errors. */

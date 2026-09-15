@@ -48,7 +48,10 @@ async function inspectAsync(
   if (context.identity.target !== 'ios') return failed('APP_STORE_LISTING_IDENTITY_INVALID');
   const access = await runtime.resolveTokenAsync(context.credentials, context.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
-  const resolved = await metadata.resolveContextAsync(context.identity.bundleIdentifier, access.token);
+  const resolved = await metadata.resolveContextAsync(
+    context.identity.bundleIdentifier,
+    access.token,
+  );
   if (resolved === null) return editableRequired();
   const assetSets = await screenshots.readAssetsAsync(resolved.version, access.token);
   if (assetSets === null) return failed('APP_STORE_LISTING_INSPECTION_FAILED');
@@ -73,10 +76,14 @@ async function syncAsync(
 ): Promise<DeploymentProviderResult<StoreListingTargetState>> {
   if (request.identity.target !== 'ios') return failed('APP_STORE_LISTING_IDENTITY_INVALID');
   if (request.plan.status === 'blocked') return failed('APP_STORE_LISTING_PLAN_BLOCKED');
-  if (request.plan.status === 'no-change') return inspectAsync(request, runtime, metadata, screenshots);
+  if (request.plan.status === 'no-change')
+    return inspectAsync(request, runtime, metadata, screenshots);
   const access = await runtime.resolveTokenAsync(request.credentials, request.resolveSecret);
   if (!access.ok) return { status: 'action-required', action: access.action };
-  const initial = await metadata.resolveContextAsync(request.identity.bundleIdentifier, access.token);
+  const initial = await metadata.resolveContextAsync(
+    request.identity.bundleIdentifier,
+    access.token,
+  );
   if (initial === null) return editableRequired();
   for (const step of request.plan.steps.filter((value) => value.operation !== 'replace-assets')) {
     if (step.target !== 'ios') continue;
@@ -84,7 +91,10 @@ async function syncAsync(
     if (desired === undefined || !(await metadata.writeLocaleAsync(initial, desired, access.token)))
       return failed('APP_STORE_LISTING_SYNC_FAILED');
   }
-  const refreshed = await metadata.resolveContextAsync(request.identity.bundleIdentifier, access.token);
+  const refreshed = await metadata.resolveContextAsync(
+    request.identity.bundleIdentifier,
+    access.token,
+  );
   if (refreshed === null) return editableRequired();
   for (const step of request.plan.steps.filter((value) => value.operation === 'replace-assets')) {
     if (step.target !== 'ios' || step.variant === undefined) continue;

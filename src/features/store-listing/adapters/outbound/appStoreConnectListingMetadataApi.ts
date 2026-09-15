@@ -12,7 +12,10 @@ import { findAppStoreConnectAppIdAsync } from '../../../../utils/findAppStoreCon
 const API = 'https://api.appstoreconnect.apple.com/v1';
 
 export interface AppStoreConnectListingMetadataApi {
-  resolveContextAsync(bundleIdentifier: string, token: string): Promise<AppStoreListingContext | null>;
+  resolveContextAsync(
+    bundleIdentifier: string,
+    token: string,
+  ): Promise<AppStoreListingContext | null>;
   writeLocaleAsync(
     context: AppStoreListingContext,
     desired: StoreListingLocale,
@@ -41,7 +44,11 @@ async function resolveContextAsync(
   const appId = await findAppStoreConnectAppIdAsync(bundleIdentifier, token, runtime);
   if (appId === null) return null;
   const [infos, versions] = await Promise.all([
-    readCollectionAsync(`${API}/apps/${encodeURIComponent(appId)}/appInfos?limit=200`, token, runtime),
+    readCollectionAsync(
+      `${API}/apps/${encodeURIComponent(appId)}/appInfos?limit=200`,
+      token,
+      runtime,
+    ),
     readCollectionAsync(
       `${API}/apps/${encodeURIComponent(appId)}/appStoreVersions?filter[platform]=IOS&limit=200`,
       token,
@@ -99,9 +106,7 @@ async function readLocalizationsAsync(
   const values = await readCollectionAsync(url, token, runtime);
   if (values === null) return null;
   const parsed = values.map(parseLocalization);
-  return parsed.every((value) => value !== null)
-    ? parsed.filter((value) => value !== null)
-    : null;
+  return parsed.every((value) => value !== null) ? parsed.filter((value) => value !== null) : null;
 }
 
 /*** Parses one App Store localization resource. */
@@ -130,7 +135,9 @@ async function writeLocaleAsync(
       attributes: {
         name: desired.name,
         ...(desired.summary === undefined ? {} : { subtitle: desired.summary }),
-        ...(desired.privacyPolicyUrl === undefined ? {} : { privacyPolicyUrl: desired.privacyPolicyUrl }),
+        ...(desired.privacyPolicyUrl === undefined
+          ? {}
+          : { privacyPolicyUrl: desired.privacyPolicyUrl }),
       },
       token,
       runtime,
@@ -143,7 +150,9 @@ async function writeLocaleAsync(
       attributes: {
         ...(desired.description === undefined ? {} : { description: desired.description }),
         ...(desired.keywords === undefined ? {} : { keywords: desired.keywords.join(',') }),
-        ...(desired.promotionalText === undefined ? {} : { promotionalText: desired.promotionalText }),
+        ...(desired.promotionalText === undefined
+          ? {}
+          : { promotionalText: desired.promotionalText }),
         ...(desired.supportUrl === undefined ? {} : { supportUrl: desired.supportUrl }),
         ...(desired.marketingUrl === undefined ? {} : { marketingUrl: desired.marketingUrl }),
       },
@@ -202,9 +211,7 @@ async function readCollectionAsync(
   const response = await safeRequestAsync(runtime, { method: 'GET', url, token });
   if (response === null || !isSuccess(response.status)) return null;
   const root = parseJson(response.body);
-  return isRecord(root) && Array.isArray(root.data)
-    ? root.data.map((item: unknown) => item)
-    : null;
+  return isRecord(root) && Array.isArray(root.data) ? root.data.map((item: unknown) => item) : null;
 }
 
 /*** Executes one provider request while containing transport errors. */

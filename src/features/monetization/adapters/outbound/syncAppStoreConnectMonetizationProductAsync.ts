@@ -240,7 +240,11 @@ async function writeLocalizationAsync(options: {
 }
 
 /*** Checks one known provider attribute without dynamic object indexing. */
-function matchesAttribute(value: unknown, key: 'productId' | 'referenceName', expected: string): boolean {
+function matchesAttribute(
+  value: unknown,
+  key: 'productId' | 'referenceName',
+  expected: string,
+): boolean {
   if (!isRecord(value) || !isRecord(value.attributes)) return false;
   return key === 'productId'
     ? value.attributes.productId === expected
@@ -280,7 +284,10 @@ async function readCollectionAsync(
 /*** Reads one JSON:API resource id. */
 function readResourceId(body: string, type: string): string | null {
   const root = parseJson(body);
-  return isRecord(root) && isRecord(root.data) && root.data.type === type && isNonEmptyString(root.data.id)
+  return isRecord(root) &&
+    isRecord(root.data) &&
+    root.data.type === type &&
+    isNonEmptyString(root.data.id)
     ? root.data.id
     : null;
 }

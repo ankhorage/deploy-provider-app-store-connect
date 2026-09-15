@@ -36,7 +36,11 @@ async function inspectAsync(
     runtime,
   );
   if (appId === null) return appRequired();
-  const state = await inspectAppStoreConnectMonetizationAsync({ appId, token: access.token, runtime });
+  const state = await inspectAppStoreConnectMonetizationAsync({
+    appId,
+    token: access.token,
+    runtime,
+  });
   return state === null
     ? failed('APP_STORE_MONETIZATION_INSPECTION_FAILED')
     : { status: 'completed', value: state };

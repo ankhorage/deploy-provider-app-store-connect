@@ -82,7 +82,8 @@ async function normalizeIapAsync(
     runtime,
   );
   if (localizations === null) return null;
-  const kind = value.attributes.inAppPurchaseType === 'CONSUMABLE' ? 'consumable' : 'non-consumable';
+  const kind =
+    value.attributes.inAppPurchaseType === 'CONSUMABLE' ? 'consumable' : 'non-consumable';
   return { id: value.attributes.productId, kind, localizations };
 }
 
@@ -110,7 +111,8 @@ async function normalizeSubscriptionAsync(
   );
   if (localizations === null) return null;
   const familyId = readGroupRelationshipId(resource);
-  const family = families.find((item) => item.id === familyId)?.name ?? resource.attributes.productId;
+  const family =
+    families.find((item) => item.id === familyId)?.name ?? resource.attributes.productId;
   const period = fromApplePeriod(resource.attributes.subscriptionPeriod);
   return {
     id: resource.attributes.productId,
@@ -155,7 +157,7 @@ async function readCollectionAsync(
 /*** Reads the subscription-group relationship id. */
 function readGroupRelationshipId(value: Readonly<Record<string, unknown>>): string | null {
   if (!isRecord(value.relationships) || !isRecord(value.relationships.group)) return null;
-  const data = value.relationships.group.data;
+  const { data } = value.relationships.group;
   return isRecord(data) && data.type === 'subscriptionGroups' && isNonEmptyString(data.id)
     ? data.id
     : null;

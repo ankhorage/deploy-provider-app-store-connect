@@ -15,7 +15,6 @@ App Store Connect deployment provider for Ankhorage application shipment.
 - [Architecture overview](././paradox/diagrams/architecture-overview.mmd)
 - [Module relationships](././paradox/diagrams/module-relationships.mmd)
 - [Export graph](././paradox/diagrams/export-graph.mmd)
-- [createAppStoreConnectDeploymentProvider sequence](././paradox/diagrams/sequences/create-app-store-connect-deployment-provider.mmd)
 
 ## Public API
 

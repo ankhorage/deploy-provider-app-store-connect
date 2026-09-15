@@ -34,7 +34,12 @@ function mergeLocale(
     ...(description === undefined ? {} : { description }),
     ...(keywords === undefined
       ? {}
-      : { keywords: keywords.split(',').map((item) => item.trim()).filter(Boolean) }),
+      : {
+          keywords: keywords
+            .split(',')
+            .map((item) => item.trim())
+            .filter(Boolean),
+        }),
     ...(promotionalText === undefined ? {} : { promotionalText }),
     ...(supportUrl === undefined ? {} : { supportUrl }),
     ...(marketingUrl === undefined ? {} : { marketingUrl }),

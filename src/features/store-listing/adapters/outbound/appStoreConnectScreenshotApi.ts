@@ -43,9 +43,7 @@ async function readAssetsAsync(
   const nested = await Promise.all(
     localizations.map((localization) => readLocalizationAssetsAsync(localization, token, runtime)),
   );
-  return nested.some((value) => value === null)
-    ? null
-    : nested.flatMap((value) => value ?? []);
+  return nested.some((value) => value === null) ? null : nested.flatMap((value) => value ?? []);
 }
 
 /*** Reads screenshot sets for one App Store version localization. */
@@ -63,9 +61,7 @@ async function readLocalizationAssetsAsync(
   const values = await Promise.all(
     sets.map((set) => readScreenshotSetAsync(localization.locale, set, token, runtime)),
   );
-  return values.every((value) => value !== null)
-    ? values.filter((value) => value !== null)
-    : null;
+  return values.every((value) => value !== null) ? values.filter((value) => value !== null) : null;
 }
 
 /*** Reads one screenshot set and its source-file checksums. */
@@ -209,7 +205,13 @@ async function uploadScreenshotAsync(
   token: string,
   runtime: AppStoreConnectRuntime,
 ): Promise<boolean> {
-  const reservation = await reserveScreenshotAsync(setId, fileName, bytes.byteLength, token, runtime);
+  const reservation = await reserveScreenshotAsync(
+    setId,
+    fileName,
+    bytes.byteLength,
+    token,
+    runtime,
+  );
   if (reservation === null) return false;
   const statuses = await Promise.all(
     reservation.operations.map((operation) =>
@@ -299,9 +301,7 @@ async function readCollectionAsync(
   const response = await safeRequestAsync(runtime, { method: 'GET', url, token });
   if (response === null || !isSuccess(response.status)) return null;
   const root = parseJson(response.body);
-  return isRecord(root) && Array.isArray(root.data)
-    ? root.data.map((item: unknown) => item)
-    : null;
+  return isRecord(root) && Array.isArray(root.data) ? root.data.map((item: unknown) => item) : null;
 }
 
 /*** Executes one provider request while containing transport errors. */
@@ -319,7 +319,10 @@ async function safeRequestAsync(
 /*** Reads a JSON:API resource id. */
 function readResourceId(body: string, type: string): string | null {
   const root = parseJson(body);
-  return isRecord(root) && isRecord(root.data) && root.data.type === type && isNonEmptyString(root.data.id)
+  return isRecord(root) &&
+    isRecord(root.data) &&
+    root.data.type === type &&
+    isNonEmptyString(root.data.id)
     ? root.data.id
     : null;
 }

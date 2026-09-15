@@ -39,7 +39,8 @@ export function createAppStoreConnectIosPublicationApi(
     findAppIdAsync: (bundleIdentifier, token) => findAppIdAsync(bundleIdentifier, token, runtime),
     readVersionAsync: (appId, version, token) => readVersionAsync(appId, version, token, runtime),
     uploadBuildAsync: (options) => uploadBuildAsync(options, runtime),
-    ensureVersionAsync: (appId, version, token) => ensureVersionAsync(appId, version, token, runtime),
+    ensureVersionAsync: (appId, version, token) =>
+      ensureVersionAsync(appId, version, token, runtime),
     attachBuildAsync: (versionId, buildId, token) =>
       attachBuildAsync(versionId, buildId, token, runtime),
   };
@@ -127,7 +128,7 @@ function matchesVersion(value: unknown, version: string): boolean {
 /*** Reads the build relationship id without dynamic property access. */
 function readBuildRelationshipId(value: Readonly<Record<string, unknown>>): string | null {
   if (!isRecord(value.relationships) || !isRecord(value.relationships.build)) return null;
-  const data = value.relationships.build.data;
+  const { data } = value.relationships.build;
   return isRecord(data) && data.type === 'builds' && isNonEmptyString(data.id) ? data.id : null;
 }
 
@@ -168,7 +169,12 @@ async function uploadBuildAsync(
 
 /*** Creates an App Store build-upload container. */
 async function createBuildUploadAsync(
-  options: { readonly appId: string; readonly version: string; readonly buildNumber: string; readonly token: string },
+  options: {
+    readonly appId: string;
+    readonly version: string;
+    readonly buildNumber: string;
+    readonly token: string;
+  },
   runtime: AppStoreConnectRuntime,
 ): Promise<string | null> {
   const response = await safeRequestAsync(runtime, {
@@ -363,7 +369,10 @@ async function safeRequestAsync(
 /*** Reads a JSON:API resource id. */
 function readResourceId(body: string, type: string): string | null {
   const root = parseJson(body);
-  return isRecord(root) && isRecord(root.data) && root.data.type === type && isNonEmptyString(root.data.id)
+  return isRecord(root) &&
+    isRecord(root.data) &&
+    root.data.type === type &&
+    isNonEmptyString(root.data.id)
     ? root.data.id
     : null;
 }

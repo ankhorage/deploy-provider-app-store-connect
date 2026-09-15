@@ -79,9 +79,21 @@
       ]
     },
     {
+      "path": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/utils/createAppStoreConnectRuntime.ts"
+      ],
+      "exports": [
+        "AppStoreConnectIosPublicationApi",
+        "createAppStoreConnectIosPublicationApi"
+      ]
+    },
+    {
       "path": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
       "isEntrypoint": false,
       "dependencies": [
+        "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
       "exports": [
@@ -92,10 +104,33 @@
       "path": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
       "isEntrypoint": false,
       "dependencies": [
-        "src/utils/createAppStoreConnectRuntime.ts"
+        "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "src/utils/createAppStoreConnectRuntime.ts",
+        "src/utils/findAppStoreConnectAppIdAsync.ts"
       ],
       "exports": [
         "createAppStoreConnectMonetizationAdapter"
+      ]
+    },
+    {
+      "path": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/utils/createAppStoreConnectRuntime.ts"
+      ],
+      "exports": [
+        "inspectAppStoreConnectMonetizationAsync"
+      ]
+    },
+    {
+      "path": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/utils/createAppStoreConnectRuntime.ts"
+      ],
+      "exports": [
+        "syncAppStoreConnectMonetizationProductAsync"
       ]
     },
     {
@@ -112,6 +147,19 @@
       ],
       "exports": [
         "createAppStoreConnectDeploymentProvider"
+      ]
+    },
+    {
+      "path": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/appStoreConnectRelease.ts",
+        "src/utils/createAppStoreConnectRuntime.ts",
+        "src/utils/findAppStoreConnectAppIdAsync.ts"
+      ],
+      "exports": [
+        "AppStoreConnectReleaseInspectionApi",
+        "createAppStoreConnectReleaseInspectionApi"
       ]
     },
     {
@@ -135,13 +183,51 @@
       ]
     },
     {
+      "path": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/appStoreConnectListing.ts",
+        "src/utils/createAppStoreConnectRuntime.ts",
+        "src/utils/findAppStoreConnectAppIdAsync.ts"
+      ],
+      "exports": [
+        "AppStoreConnectListingMetadataApi",
+        "createAppStoreConnectListingMetadataApi"
+      ]
+    },
+    {
+      "path": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/appStoreConnectListing.ts",
+        "src/utils/createAppStoreConnectRuntime.ts"
+      ],
+      "exports": [
+        "AppStoreConnectScreenshotApi",
+        "createAppStoreConnectScreenshotApi"
+      ]
+    },
+    {
       "path": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
       "isEntrypoint": false,
       "dependencies": [
+        "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
         "src/utils/createAppStoreConnectRuntime.ts"
       ],
       "exports": [
         "createAppStoreConnectStoreListingAdapter"
+      ]
+    },
+    {
+      "path": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/appStoreConnectListing.ts"
+      ],
+      "exports": [
+        "mergeAppStoreListingLocales"
       ]
     },
     {
@@ -179,6 +265,25 @@
       ]
     },
     {
+      "path": "src/types/appStoreConnectListing.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": [
+        "AppStoreListingContext",
+        "AppStoreListingResource"
+      ]
+    },
+    {
+      "path": "src/types/appStoreConnectRelease.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": [
+        "AppStorePhasedReleaseState",
+        "AppStoreReleaseContext",
+        "AppStoreReviewState"
+      ]
+    },
+    {
       "path": "src/utils/createAppStoreConnectRuntime.ts",
       "isEntrypoint": false,
       "dependencies": [
@@ -187,6 +292,16 @@
       "exports": [
         "AppStoreConnectRuntime",
         "createAppStoreConnectRuntime"
+      ]
+    },
+    {
+      "path": "src/utils/findAppStoreConnectAppIdAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/utils/createAppStoreConnectRuntime.ts"
+      ],
+      "exports": [
+        "findAppStoreConnectAppIdAsync"
       ]
     }
   ],
@@ -301,11 +416,200 @@
   "components": [],
   "sourceFunctions": [
     {
+      "name": "createAppStoreConnectIosPublicationApi",
+      "description": "Creates App Store Connect API operations required for iOS publication.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 35,
+        "column": 1
+      }
+    },
+    {
+      "name": "findAppIdAsync",
+      "description": "Resolves the unique App Store app id for one bundle identifier.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 50,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesApp",
+      "description": "Checks whether one JSON:API resource matches the expected bundle identifier.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 74,
+        "column": 1
+      }
+    },
+    {
+      "name": "readVersionAsync",
+      "description": "Reads one App Store version and its included build.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 84,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesVersion",
+      "description": "Checks whether one resource is the requested iOS App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 119,
+        "column": 1
+      }
+    },
+    {
+      "name": "readBuildRelationshipId",
+      "description": "Reads the build relationship id without dynamic property access.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 129,
+        "column": 1
+      }
+    },
+    {
+      "name": "uploadBuildAsync",
+      "description": "Uploads an IPA and waits until Apple exposes the processed build.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 136,
+        "column": 1
+      }
+    },
+    {
+      "name": "createBuildUploadAsync",
+      "description": "Creates an App Store build-upload container.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 171,
+        "column": 1
+      }
+    },
+    {
+      "name": "reserveUploadAsync",
+      "description": "Reserves signed upload operations for an IPA.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 200,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseUploadOperation",
+      "description": "Parses one signed App Store upload operation.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 229,
+        "column": 1
+      }
+    },
+    {
+      "name": "commitUploadAsync",
+      "description": "Marks the reserved build-upload file as uploaded.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 244,
+        "column": 1
+      }
+    },
+    {
+      "name": "waitForBuildAsync",
+      "description": "Polls a build upload until Apple exposes the expected build resource.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 261,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesBuild",
+      "description": "Checks whether an included build has the expected build number.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 285,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureVersionAsync",
+      "description": "Finds or creates an App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 296,
+        "column": 1
+      }
+    },
+    {
+      "name": "findVersionIdAsync",
+      "description": "Finds an existing App Store version id.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 320,
+        "column": 1
+      }
+    },
+    {
+      "name": "attachBuildAsync",
+      "description": "Attaches a processed build to one App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 342,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one App Store Connect request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 358,
+        "column": 1
+      }
+    },
+    {
+      "name": "readResourceId",
+      "description": "Reads a JSON:API resource id.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 370,
+        "column": 1
+      }
+    },
+    {
+      "name": "unknownArray",
+      "description": "Converts an unknown array boundary into a typed unknown list.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 381,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 386,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "line": 395,
+        "column": 1
+      }
+    },
+    {
       "name": "createAppStoreConnectIosPublisher",
       "description": "Creates the iOS App Store Connect publisher, inspector, and verifier.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 25,
+        "line": 14,
         "column": 1
       }
     },
@@ -314,7 +618,7 @@
       "description": "Inspects the App Store version and attached build for one bundle identifier.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 36,
+        "line": 28,
         "column": 1
       }
     },
@@ -323,160 +627,34 @@
       "description": "Publishes an iOS artifact through Apple's build-upload API and attaches it to the version.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 57,
+        "line": 50,
         "column": 1
       }
     },
     {
       "name": "verifyAsync",
-      "description": "Verifies that the expected App Store version is attached to the published build number.",
+      "description": "Verifies the expected version and build number through a fresh inspection.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 88,
+        "line": 77,
         "column": 1
       }
     },
     {
-      "name": "findAppIdAsync",
-      "description": "Resolves the unique App Store app id for a bundle identifier.",
+      "name": "completedPublication",
+      "description": "Creates the completed portable iOS publication value.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 101,
-        "column": 1
-      }
-    },
-    {
-      "name": "readVersionAsync",
-      "description": "Reads one version and its included build, returning null when the version does not exist.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 132,
-        "column": 1
-      }
-    },
-    {
-      "name": "uploadBuildAsync",
-      "description": "Uploads an IPA and waits until App Store Connect exposes its processed build.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 173,
-        "column": 1
-      }
-    },
-    {
-      "name": "createBuildUploadAsync",
-      "description": "Creates the App Store build-upload container.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 208,
-        "column": 1
-      }
-    },
-    {
-      "name": "reserveUploadAsync",
-      "description": "Reserves signed upload operations for the IPA bytes.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 234,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseUploadOperation",
-      "description": "Parses one signed App Store upload operation.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 264,
-        "column": 1
-      }
-    },
-    {
-      "name": "waitForBuildAsync",
-      "description": "Polls the build upload until Apple exposes the processed build resource.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 287,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureVersionAsync",
-      "description": "Ensures an editable App Store version exists for the published version string.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 317,
-        "column": 1
-      }
-    },
-    {
-      "name": "findVersionIdAsync",
-      "description": "Finds an existing version id, using undefined to represent a missing version.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 341,
-        "column": 1
-      }
-    },
-    {
-      "name": "attachBuildAsync",
-      "description": "Attaches a processed build to an App Store version.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 366,
-        "column": 1
-      }
-    },
-    {
-      "name": "safeRequestAsync",
-      "description": "Executes an App Store Connect request while containing transport failures.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 382,
-        "column": 1
-      }
-    },
-    {
-      "name": "readResourceId",
-      "description": "Reads a JSON:API resource id from a response body.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 394,
-        "column": 1
-      }
-    },
-    {
-      "name": "readRelationshipId",
-      "description": "Reads one relationship resource id from a JSON:API object.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 405,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseJson",
-      "description": "Parses JSON without exposing parser exceptions.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 412,
-        "column": 1
-      }
-    },
-    {
-      "name": "isSuccess",
-      "description": "Tests whether an HTTP status code is successful.",
-      "sourceLocation": {
-        "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 421,
+        "line": 91,
         "column": 1
       }
     },
     {
       "name": "appRequired",
-      "description": "Creates the manual action required when the app is absent.",
+      "description": "Creates the manual action required when the matching App Store app is absent.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 426,
+        "line": 109,
         "column": 1
       }
     },
@@ -485,7 +663,7 @@
       "description": "Creates an iOS publication manual-action result.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 440,
+        "line": 123,
         "column": 1
       }
     },
@@ -494,7 +672,7 @@
       "description": "Creates a failed App Store inspection result.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 454,
+        "line": 137,
         "column": 1
       }
     },
@@ -503,7 +681,7 @@
       "description": "Creates a failed App Store publication result.",
       "sourceLocation": {
         "filePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "line": 467,
+        "line": 150,
         "column": 1
       }
     },
@@ -512,214 +690,25 @@
       "description": "Creates the App Store Connect monetization adapter for IAPs and subscriptions.",
       "sourceLocation": {
         "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 21,
+        "line": 15,
         "column": 1
       }
     },
     {
       "name": "inspectAsync",
-      "description": "Inspects App Store in-app purchases and subscriptions.",
+      "description": "Inspects portable monetization state for the configured App Store app.",
       "sourceLocation": {
         "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 32,
+        "line": 26,
         "column": 1
       }
     },
     {
       "name": "syncAsync",
-      "description": "Executes monetization plan steps with idempotent App Store product upserts.",
+      "description": "Executes provider-owned monetization plan steps and re-inspects the resulting state.",
       "sourceLocation": {
         "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 89,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureProductAsync",
-      "description": "Ensures one App Store product, its localization metadata, and subscription family exist.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 111,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureFamilyAsync",
-      "description": "Finds or creates one App Store subscription group.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 136,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureSubscriptionAsync",
-      "description": "Finds or creates one App Store subscription.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 168,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureIapAsync",
-      "description": "Finds or creates one consumable or non-consumable App Store purchase.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 205,
-        "column": 1
-      }
-    },
-    {
-      "name": "syncSubscriptionLocalizationsAsync",
-      "description": "Synchronizes subscription localizations through the public App Store API.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 241,
-        "column": 1
-      }
-    },
-    {
-      "name": "syncIapLocalizationsAsync",
-      "description": "Synchronizes in-app-purchase localizations through the public App Store API.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 268,
-        "column": 1
-      }
-    },
-    {
-      "name": "writeLocalizationAsync",
-      "description": "Creates or patches one monetization localization.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 295,
-        "column": 1
-      }
-    },
-    {
-      "name": "normalizeIapAsync",
-      "description": "Normalizes one App Store in-app purchase into the portable observed product model.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 334,
-        "column": 1
-      }
-    },
-    {
-      "name": "normalizeSubscriptionAsync",
-      "description": "Normalizes one subscription relationship into the portable observed product model.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 352,
-        "column": 1
-      }
-    },
-    {
-      "name": "readLocalizationsAsync",
-      "description": "Reads portable monetization localizations from a provider collection.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 389,
-        "column": 1
-      }
-    },
-    {
-      "name": "toApplePeriod",
-      "description": "Maps the portable subscription period to Apple's duration identifier.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 413,
-        "column": 1
-      }
-    },
-    {
-      "name": "fromApplePeriod",
-      "description": "Maps Apple's duration identifier to the portable subscription period.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 427,
-        "column": 1
-      }
-    },
-    {
-      "name": "findAppIdAsync",
-      "description": "Finds the App Store app matching one bundle identifier.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 440,
-        "column": 1
-      }
-    },
-    {
-      "name": "readCollectionAsync",
-      "description": "Reads one JSON:API collection.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 460,
-        "column": 1
-      }
-    },
-    {
-      "name": "safeRequestAsync",
-      "description": "Executes one provider request while containing transport failures.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 472,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseResource",
-      "description": "Reads one JSON:API resource object.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 484,
-        "column": 1
-      }
-    },
-    {
-      "name": "readResourceId",
-      "description": "Reads a JSON:API resource id.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 490,
-        "column": 1
-      }
-    },
-    {
-      "name": "readRelationshipId",
-      "description": "Reads one relationship id from a JSON:API resource.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 496,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseJson",
-      "description": "Parses JSON without exposing parser exceptions.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 503,
-        "column": 1
-      }
-    },
-    {
-      "name": "isSuccess",
-      "description": "Tests whether an HTTP status code is successful.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 512,
-        "column": 1
-      }
-    },
-    {
-      "name": "isObservedProduct",
-      "description": "Narrows nullable observed products.",
-      "sourceLocation": {
-        "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 517,
+        "line": 50,
         "column": 1
       }
     },
@@ -728,7 +717,7 @@
       "description": "Creates the manual action required when the App Store app is absent.",
       "sourceLocation": {
         "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 524,
+        "line": 81,
         "column": 1
       }
     },
@@ -737,7 +726,277 @@
       "description": "Creates a failed App Store monetization result.",
       "sourceLocation": {
         "filePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "line": 538,
+        "line": 95,
+        "column": 1
+      }
+    },
+    {
+      "name": "inspectAppStoreConnectMonetizationAsync",
+      "description": "Inspects App Store in-app purchases and subscriptions into the portable state model.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 16,
+        "column": 1
+      }
+    },
+    {
+      "name": "readFamilies",
+      "description": "Reads subscription-family ids and canonical names.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 51,
+        "column": 1
+      }
+    },
+    {
+      "name": "readSubscriptionRelationships",
+      "description": "Reads subscription relationship resources from subscription groups.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 63,
+        "column": 1
+      }
+    },
+    {
+      "name": "normalizeIapAsync",
+      "description": "Normalizes one App Store in-app purchase.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 72,
+        "column": 1
+      }
+    },
+    {
+      "name": "normalizeSubscriptionAsync",
+      "description": "Normalizes one App Store subscription.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 91,
+        "column": 1
+      }
+    },
+    {
+      "name": "readLocalizationsAsync",
+      "description": "Reads portable monetization localizations from a provider collection.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 126,
+        "column": 1
+      }
+    },
+    {
+      "name": "readCollectionAsync",
+      "description": "Reads a JSON:API collection while distinguishing transport failure from an empty collection.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 143,
+        "column": 1
+      }
+    },
+    {
+      "name": "readGroupRelationshipId",
+      "description": "Reads the subscription-group relationship id.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 158,
+        "column": 1
+      }
+    },
+    {
+      "name": "fromApplePeriod",
+      "description": "Maps Apple's subscription duration to the portable period.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 167,
+        "column": 1
+      }
+    },
+    {
+      "name": "isObservedProduct",
+      "description": "Narrows nullable observed products.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 187,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseResource",
+      "description": "Reads one JSON:API resource.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 194,
+        "column": 1
+      }
+    },
+    {
+      "name": "unknownArray",
+      "description": "Converts an unknown array boundary into a typed unknown list.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 200,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one App Store request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 205,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 217,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "line": 226,
+        "column": 1
+      }
+    },
+    {
+      "name": "syncAppStoreConnectMonetizationProductAsync",
+      "description": "Ensures one App Store product and its localization metadata exist.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 15,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureFamilyAsync",
+      "description": "Finds or creates the subscription group for one portable subscription family.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 32,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureSubscriptionAsync",
+      "description": "Finds or creates one App Store subscription in a subscription group.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 63,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureIapAsync",
+      "description": "Finds or creates one consumable or non-consumable in-app purchase.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 100,
+        "column": 1
+      }
+    },
+    {
+      "name": "syncSubscriptionLocalizationsAsync",
+      "description": "Synchronizes subscription localizations.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 135,
+        "column": 1
+      }
+    },
+    {
+      "name": "syncIapLocalizationsAsync",
+      "description": "Synchronizes in-app-purchase localizations.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 166,
+        "column": 1
+      }
+    },
+    {
+      "name": "writeLocalizationAsync",
+      "description": "Creates or patches one monetization localization.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 197,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesAttribute",
+      "description": "Checks one known provider attribute without dynamic object indexing.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 243,
+        "column": 1
+      }
+    },
+    {
+      "name": "toApplePeriod",
+      "description": "Maps the portable subscription duration to Apple's duration identifier.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 255,
+        "column": 1
+      }
+    },
+    {
+      "name": "readCollectionAsync",
+      "description": "Reads one JSON:API collection while preserving request failure.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 273,
+        "column": 1
+      }
+    },
+    {
+      "name": "readResourceId",
+      "description": "Reads one JSON:API resource id.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 285,
+        "column": 1
+      }
+    },
+    {
+      "name": "unknownArray",
+      "description": "Converts an unknown array boundary into a typed unknown list.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 296,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one App Store request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 301,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 313,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "line": 322,
         "column": 1
       }
     },
@@ -747,6 +1006,132 @@
       "sourceLocation": {
         "filePath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts",
         "line": 17,
+        "column": 1
+      }
+    },
+    {
+      "name": "createAppStoreConnectReleaseInspectionApi",
+      "description": "Creates App Store Connect operations used to inspect release state.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 28,
+        "column": 1
+      }
+    },
+    {
+      "name": "resolveContextAsync",
+      "description": "Resolves the App Store version resource for a bundle identifier and version string.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 42,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesVersion",
+      "description": "Checks whether a JSON:API version resource matches the requested version.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 63,
+        "column": 1
+      }
+    },
+    {
+      "name": "readNotesAsync",
+      "description": "Reads localized what's-new notes for one App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 70,
+        "column": 1
+      }
+    },
+    {
+      "name": "readBuildNumberAsync",
+      "description": "Reads the build number attached to one App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 91,
+        "column": 1
+      }
+    },
+    {
+      "name": "readReviewAsync",
+      "description": "Reads the review submission associated with one App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 111,
+        "column": 1
+      }
+    },
+    {
+      "name": "reviewMatchesVersion",
+      "description": "Checks whether one review submission references the requested App Store version.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 134,
+        "column": 1
+      }
+    },
+    {
+      "name": "readPhasedAsync",
+      "description": "Reads the phased-release resource and portable state.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 142,
+        "column": 1
+      }
+    },
+    {
+      "name": "normalizePhasedState",
+      "description": "Normalizes an App Store phased-release state to the portable contract.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 164,
+        "column": 1
+      }
+    },
+    {
+      "name": "readCollectionAsync",
+      "description": "Reads one JSON:API collection while preserving request failures.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 171,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one App Store request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 183,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseResource",
+      "description": "Reads one JSON:API resource from a response body.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 195,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 201,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "line": 210,
         "column": 1
       }
     },
@@ -1021,11 +1406,281 @@
       }
     },
     {
+      "name": "createAppStoreConnectListingMetadataApi",
+      "description": "Creates App Store Connect operations for editable listing metadata.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 27,
+        "column": 1
+      }
+    },
+    {
+      "name": "resolveContextAsync",
+      "description": "Resolves editable App Info and App Store Version localization containers.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 39,
+        "column": 1
+      }
+    },
+    {
+      "name": "findEditableId",
+      "description": "Finds one editable App Store resource id.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 78,
+        "column": 1
+      }
+    },
+    {
+      "name": "isEditableResource",
+      "description": "Checks whether a provider resource can still be edited.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 85,
+        "column": 1
+      }
+    },
+    {
+      "name": "readLocalizationsAsync",
+      "description": "Reads localization resources from one JSON:API collection.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 101,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseLocalization",
+      "description": "Parses one App Store localization resource.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 113,
+        "column": 1
+      }
+    },
+    {
+      "name": "writeLocaleAsync",
+      "description": "Writes App Info and version localization metadata for one locale.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 121,
+        "column": 1
+      }
+    },
+    {
+      "name": "writeLocalizationAsync",
+      "description": "Creates or patches one App Store listing localization.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 167,
+        "column": 1
+      }
+    },
+    {
+      "name": "ownerRelationship",
+      "description": "Maps a listing localization type to Apple's required ownership relationship.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 196,
+        "column": 1
+      }
+    },
+    {
+      "name": "readCollectionAsync",
+      "description": "Reads one JSON:API collection.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 206,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one provider request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 218,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 230,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "line": 239,
+        "column": 1
+      }
+    },
+    {
+      "name": "createAppStoreConnectScreenshotApi",
+      "description": "Creates App Store Connect screenshot read and replacement operations.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 28,
+        "column": 1
+      }
+    },
+    {
+      "name": "readAssetsAsync",
+      "description": "Reads screenshot sets and provider checksum state for all version localizations.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 38,
+        "column": 1
+      }
+    },
+    {
+      "name": "readLocalizationAssetsAsync",
+      "description": "Reads screenshot sets for one App Store version localization.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 50,
+        "column": 1
+      }
+    },
+    {
+      "name": "readScreenshotSetAsync",
+      "description": "Reads one screenshot set and its source-file checksums.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 68,
+        "column": 1
+      }
+    },
+    {
+      "name": "replaceAssetsAsync",
+      "description": "Replaces one screenshot set from portable desired asset bytes.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 98,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureScreenshotSetAsync",
+      "description": "Finds or creates one screenshot set for a display variant.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 130,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesScreenshotVariant",
+      "description": "Checks whether one screenshot set uses a requested display variant.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 164,
+        "column": 1
+      }
+    },
+    {
+      "name": "clearScreenshotsAsync",
+      "description": "Deletes all current screenshots from one screenshot set.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 173,
+        "column": 1
+      }
+    },
+    {
+      "name": "uploadScreenshotAsync",
+      "description": "Reserves, transfers, and commits one App Store screenshot.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 201,
+        "column": 1
+      }
+    },
+    {
+      "name": "reserveScreenshotAsync",
+      "description": "Reserves signed upload operations for one screenshot.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 250,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseUploadOperation",
+      "description": "Parses one screenshot upload operation.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 280,
+        "column": 1
+      }
+    },
+    {
+      "name": "readCollectionAsync",
+      "description": "Reads one JSON:API collection.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 296,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeRequestAsync",
+      "description": "Executes one provider request while containing transport errors.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 308,
+        "column": 1
+      }
+    },
+    {
+      "name": "readResourceId",
+      "description": "Reads a JSON:API resource id.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 320,
+        "column": 1
+      }
+    },
+    {
+      "name": "unknownArray",
+      "description": "Converts an unknown array boundary into a typed unknown list.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 331,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseJson",
+      "description": "Parses JSON without leaking parser exceptions.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 336,
+        "column": 1
+      }
+    },
+    {
+      "name": "isSuccess",
+      "description": "Tests whether an HTTP status is successful.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "line": 345,
+        "column": 1
+      }
+    },
+    {
       "name": "createAppStoreConnectStoreListingAdapter",
       "description": "Creates the App Store listing adapter for localized metadata and screenshots.",
       "sourceLocation": {
         "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 41,
+        "line": 26,
         "column": 1
       }
     },
@@ -1034,187 +1689,16 @@
       "description": "Inspects editable App Store metadata and screenshot checksums.",
       "sourceLocation": {
         "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 52,
+        "line": 42,
         "column": 1
       }
     },
     {
       "name": "syncAsync",
-      "description": "Applies a provider-neutral listing plan through App Store Connect JSON:API.",
+      "description": "Applies provider-neutral listing plan steps through App Store Connect.",
       "sourceLocation": {
         "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 81,
-        "column": 1
-      }
-    },
-    {
-      "name": "resolveContextAsync",
-      "description": "Resolves editable App Info and App Store Version localization containers.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 115,
-        "column": 1
-      }
-    },
-    {
-      "name": "findAppIdAsync",
-      "description": "Finds the App Store app matching one bundle identifier.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 153,
-        "column": 1
-      }
-    },
-    {
-      "name": "findEditableId",
-      "description": "Finds one editable App Store resource id from a collection.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 173,
-        "column": 1
-      }
-    },
-    {
-      "name": "isEditable",
-      "description": "Determines whether App Store metadata can still be edited.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 188,
-        "column": 1
-      }
-    },
-    {
-      "name": "readLocalizationsAsync",
-      "description": "Reads localization resources from one App Store Connect collection.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 203,
-        "column": 1
-      }
-    },
-    {
-      "name": "mergeLocales",
-      "description": "Merges App Info and version localization layers into portable listing locales.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 219,
-        "column": 1
-      }
-    },
-    {
-      "name": "readAssetsAsync",
-      "description": "Reads screenshot sets and their uploaded asset checksums.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 256,
-        "column": 1
-      }
-    },
-    {
-      "name": "readScreenshotSetsAsync",
-      "description": "Reads all screenshot sets for one version localization.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 268,
-        "column": 1
-      }
-    },
-    {
-      "name": "writeLocaleAsync",
-      "description": "Writes App Info and version localization metadata for one locale.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 307,
-        "column": 1
-      }
-    },
-    {
-      "name": "writeLocalizationAsync",
-      "description": "Creates or patches one App Store localization resource.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 356,
-        "column": 1
-      }
-    },
-    {
-      "name": "replaceAssetsAsync",
-      "description": "Replaces one App Store screenshot set from desired asset bytes.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 389,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureScreenshotSetAsync",
-      "description": "Finds or creates one screenshot set for a display variant.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 433,
-        "column": 1
-      }
-    },
-    {
-      "name": "uploadScreenshotAsync",
-      "description": "Reserves, uploads, and commits one screenshot asset.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 471,
-        "column": 1
-      }
-    },
-    {
-      "name": "readCollectionAsync",
-      "description": "Reads one JSON:API collection as unknown values.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 534,
-        "column": 1
-      }
-    },
-    {
-      "name": "safeRequestAsync",
-      "description": "Executes one provider request while containing transport failures.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 546,
-        "column": 1
-      }
-    },
-    {
-      "name": "readResourceId",
-      "description": "Reads a JSON:API resource id.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 558,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseJson",
-      "description": "Parses JSON without exposing parser exceptions.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 569,
-        "column": 1
-      }
-    },
-    {
-      "name": "readString",
-      "description": "Reads a string property defensively.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 578,
-        "column": 1
-      }
-    },
-    {
-      "name": "isSuccess",
-      "description": "Tests whether an HTTP status code is successful.",
-      "sourceLocation": {
-        "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 583,
+        "line": 71,
         "column": 1
       }
     },
@@ -1223,7 +1707,7 @@
       "description": "Returns the manual action required for editable App Store metadata.",
       "sourceLocation": {
         "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 588,
+        "line": 122,
         "column": 1
       }
     },
@@ -1232,7 +1716,34 @@
       "description": "Creates a failed App Store listing result.",
       "sourceLocation": {
         "filePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "line": 602,
+        "line": 136,
+        "column": 1
+      }
+    },
+    {
+      "name": "mergeAppStoreListingLocales",
+      "description": "Merges App Info and version localization layers into portable listing locales.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "line": 6,
+        "column": 1
+      }
+    },
+    {
+      "name": "mergeLocale",
+      "description": "Merges one locale from App Info and version localization resources.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "line": 15,
+        "column": 1
+      }
+    },
+    {
+      "name": "readString",
+      "description": "Reads one optional string localization property.",
+      "sourceLocation": {
+        "filePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "line": 50,
         "column": 1
       }
     },
@@ -1343,6 +1854,24 @@
         "line": 179,
         "column": 1
       }
+    },
+    {
+      "name": "findAppStoreConnectAppIdAsync",
+      "description": "Resolves the unique App Store Connect app id for one bundle identifier.",
+      "sourceLocation": {
+        "filePath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "name": "matchesBundleIdentifier",
+      "description": "Checks whether one JSON:API app resource matches a bundle identifier.",
+      "sourceLocation": {
+        "filePath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "line": 38,
+        "column": 1
+      }
     }
   ],
   "sequenceScenarios": [
@@ -1376,6 +1905,11 @@
         "fromPath": "src/utils/createAppStoreConnectRuntime.ts",
         "toPath": "src/types/appStoreConnect.ts",
         "sourcePath": "src/utils/createAppStoreConnectRuntime.ts"
+      },
+      {
+        "fromPath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
       },
       {
         "fromPath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts",
@@ -1413,14 +1947,64 @@
         "sourcePath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts"
       },
       {
+        "fromPath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
         "fromPath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
         "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
+      },
+      {
+        "fromPath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
+        "toPath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
         "fromPath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
         "toPath": "src/utils/createAppStoreConnectRuntime.ts",
         "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
+        "toPath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
+        "toPath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
+        "toPath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromPath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toPath": "src/types/appStoreConnectRelease.ts",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromPath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromPath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toPath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
       },
       {
         "fromPath": "src/features/release/adapters/outbound/createAppStoreConnectReleaseAdapter.ts",
@@ -1433,9 +2017,54 @@
         "sourcePath": "src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts"
       },
       {
+        "fromPath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "toPath": "src/types/appStoreConnectListing.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "toPath": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toPath": "src/types/appStoreConnectListing.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toPath": "src/utils/createAppStoreConnectRuntime.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
         "fromPath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
         "toPath": "src/utils/createAppStoreConnectRuntime.ts",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
+        "toPath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
+        "toPath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
+        "toPath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
+        "fromPath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "toPath": "src/types/appStoreConnectListing.ts",
+        "sourcePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts"
       }
     ],
     "calls": [
@@ -1530,6 +2159,42 @@
         "sourcePath": "src/utils/createAppStoreConnectRuntime.ts"
       },
       {
+        "fromSymbol": "findAppStoreConnectAppIdAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
+        "fromSymbol": "findAppStoreConnectAppIdAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
+        "fromSymbol": "src/utils/findAppStoreConnectAppIdAsync.ts",
+        "toSymbol": "matchesBundleIdentifier",
+        "callExpression": "matchesBundleIdentifier",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
+        "fromSymbol": "findAppStoreConnectAppIdAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
+        "fromSymbol": "matchesBundleIdentifier",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
+        "fromSymbol": "matchesBundleIdentifier",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/utils/findAppStoreConnectAppIdAsync.ts"
+      },
+      {
         "fromSymbol": "createAppStoreConnectDeploymentProvider",
         "toSymbol": "createAppStoreConnectRuntime",
         "callExpression": "createAppStoreConnectRuntime",
@@ -1566,6 +2231,426 @@
         "sourcePath": "src/features/provider-registration/composition/createAppStoreConnectDeploymentProvider.ts"
       },
       {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "findAppIdAsync",
+        "callExpression": "findAppIdAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "readVersionAsync",
+        "callExpression": "readVersionAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "uploadBuildAsync",
+        "toSymbol": "uploadBuildAsync",
+        "callExpression": "uploadBuildAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "ensureVersionAsync",
+        "toSymbol": "ensureVersionAsync",
+        "callExpression": "ensureVersionAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "attachBuildAsync",
+        "toSymbol": "attachBuildAsync",
+        "callExpression": "attachBuildAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "matchesApp",
+        "callExpression": "matchesApp",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findAppIdAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "matchesApp",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "matchesApp",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "matchesVersion",
+        "callExpression": "matchesVersion",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "readBuildRelationshipId",
+        "callExpression": "readBuildRelationshipId",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readVersionAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "matchesVersion",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildRelationshipId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildRelationshipId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "uploadBuildAsync",
+        "toSymbol": "createBuildUploadAsync",
+        "callExpression": "createBuildUploadAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "uploadBuildAsync",
+        "toSymbol": "reserveUploadAsync",
+        "callExpression": "reserveUploadAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "upload",
+        "callExpression": "runtime.upload",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "uploadBuildAsync",
+        "toSymbol": "commitUploadAsync",
+        "callExpression": "commitUploadAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "uploadBuildAsync",
+        "toSymbol": "waitForBuildAsync",
+        "callExpression": "waitForBuildAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "createBuildUploadAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "createBuildUploadAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "reserveUploadAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "reserveUploadAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "reserveUploadAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "reserveUploadAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "reserveUploadAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "commitUploadAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "commitUploadAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "wait",
+        "callExpression": "runtime.wait",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts",
+        "toSymbol": "matchesBuild",
+        "callExpression": "matchesBuild",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "waitForBuildAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "matchesBuild",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "matchesBuild",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "ensureVersionAsync",
+        "toSymbol": "findVersionIdAsync",
+        "callExpression": "findVersionIdAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "ensureVersionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "ensureVersionAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "findVersionIdAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "attachBuildAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "attachBuildAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "safeRequestAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/appStoreConnectIosPublicationApi.ts"
+      },
+      {
+        "fromSymbol": "createAppStoreConnectIosPublisher",
+        "toSymbol": "createAppStoreConnectIosPublicationApi",
+        "callExpression": "createAppStoreConnectIosPublicationApi",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
+      },
+      {
         "fromSymbol": "inspectAsync",
         "toSymbol": "inspectAsync",
         "callExpression": "inspectAsync",
@@ -1592,7 +2677,7 @@
       {
         "fromSymbol": "inspectAsync",
         "toSymbol": "findAppIdAsync",
-        "callExpression": "findAppIdAsync",
+        "callExpression": "api.findAppIdAsync",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
@@ -1604,7 +2689,7 @@
       {
         "fromSymbol": "inspectAsync",
         "toSymbol": "readVersionAsync",
-        "callExpression": "readVersionAsync",
+        "callExpression": "api.readVersionAsync",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
@@ -1622,7 +2707,7 @@
       {
         "fromSymbol": "publishAsync",
         "toSymbol": "findAppIdAsync",
-        "callExpression": "findAppIdAsync",
+        "callExpression": "api.findAppIdAsync",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
@@ -1646,19 +2731,25 @@
       {
         "fromSymbol": "publishAsync",
         "toSymbol": "uploadBuildAsync",
-        "callExpression": "uploadBuildAsync",
+        "callExpression": "api.uploadBuildAsync",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
         "fromSymbol": "publishAsync",
         "toSymbol": "ensureVersionAsync",
-        "callExpression": "ensureVersionAsync",
+        "callExpression": "api.ensureVersionAsync",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
         "fromSymbol": "publishAsync",
         "toSymbol": "attachBuildAsync",
-        "callExpression": "attachBuildAsync",
+        "callExpression": "api.attachBuildAsync",
+        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
+      },
+      {
+        "fromSymbol": "publishAsync",
+        "toSymbol": "completedPublication",
+        "callExpression": "completedPublication",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
@@ -1671,300 +2762,6 @@
         "fromSymbol": "verifyAsync",
         "toSymbol": "failedInspection",
         "callExpression": "failedInspection",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "readRelationshipId",
-        "callExpression": "readRelationshipId",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readVersionAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "uploadBuildAsync",
-        "toSymbol": "createBuildUploadAsync",
-        "callExpression": "createBuildUploadAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "uploadBuildAsync",
-        "toSymbol": "reserveUploadAsync",
-        "callExpression": "reserveUploadAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts",
-        "toSymbol": "upload",
-        "callExpression": "runtime.upload",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "uploadBuildAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "uploadBuildAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "uploadBuildAsync",
-        "toSymbol": "waitForBuildAsync",
-        "callExpression": "waitForBuildAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "createBuildUploadAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "createBuildUploadAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "reserveUploadAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "reserveUploadAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "reserveUploadAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "reserveUploadAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "parseUploadOperation",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "parseUploadOperation",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "wait",
-        "callExpression": "runtime.wait",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "waitForBuildAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "ensureVersionAsync",
-        "toSymbol": "findVersionIdAsync",
-        "callExpression": "findVersionIdAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "ensureVersionAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "ensureVersionAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findVersionIdAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findVersionIdAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findVersionIdAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findVersionIdAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "findVersionIdAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "attachBuildAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "attachBuildAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "safeRequestAsync",
-        "toSymbol": "request",
-        "callExpression": "runtime.request",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readRelationshipId",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
-      },
-      {
-        "fromSymbol": "readRelationshipId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
         "sourcePath": "src/features/ios-publication/adapters/outbound/createAppStoreConnectIosPublisher.ts"
       },
       {
@@ -1993,8 +2790,8 @@
       },
       {
         "fromSymbol": "inspectAsync",
-        "toSymbol": "findAppIdAsync",
-        "callExpression": "findAppIdAsync",
+        "toSymbol": "findAppStoreConnectAppIdAsync",
+        "callExpression": "findAppStoreConnectAppIdAsync",
         "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
       },
       {
@@ -2005,32 +2802,8 @@
       },
       {
         "fromSymbol": "inspectAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "toSymbol": "normalizeIapAsync",
-        "callExpression": "normalizeIapAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "toSymbol": "normalizeSubscriptionAsync",
-        "callExpression": "normalizeSubscriptionAsync",
+        "toSymbol": "inspectAppStoreConnectMonetizationAsync",
+        "callExpression": "inspectAppStoreConnectMonetizationAsync",
         "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
       },
       {
@@ -2053,8 +2826,8 @@
       },
       {
         "fromSymbol": "syncAsync",
-        "toSymbol": "findAppIdAsync",
-        "callExpression": "findAppIdAsync",
+        "toSymbol": "findAppStoreConnectAppIdAsync",
+        "callExpression": "findAppStoreConnectAppIdAsync",
         "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
       },
       {
@@ -2065,327 +2838,651 @@
       },
       {
         "fromSymbol": "syncAsync",
-        "toSymbol": "ensureProductAsync",
-        "callExpression": "ensureProductAsync",
+        "toSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "callExpression": "syncAppStoreConnectMonetizationProductAsync",
         "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
       },
       {
-        "fromSymbol": "ensureProductAsync",
-        "toSymbol": "ensureFamilyAsync",
-        "callExpression": "ensureFamilyAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureProductAsync",
-        "toSymbol": "ensureSubscriptionAsync",
-        "callExpression": "ensureSubscriptionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureProductAsync",
-        "toSymbol": "syncSubscriptionLocalizationsAsync",
-        "callExpression": "syncSubscriptionLocalizationsAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureProductAsync",
-        "toSymbol": "ensureIapAsync",
-        "callExpression": "ensureIapAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureProductAsync",
-        "toSymbol": "syncIapLocalizationsAsync",
-        "callExpression": "syncIapLocalizationsAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureFamilyAsync",
+        "fromSymbol": "inspectAppStoreConnectMonetizationAsync",
         "toSymbol": "readCollectionAsync",
         "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
-        "fromSymbol": "ensureFamilyAsync",
+        "fromSymbol": "inspectAppStoreConnectMonetizationAsync",
+        "toSymbol": "readFamilies",
+        "callExpression": "readFamilies",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "inspectAppStoreConnectMonetizationAsync",
+        "toSymbol": "readSubscriptionRelationships",
+        "callExpression": "readSubscriptionRelationships",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "toSymbol": "normalizeIapAsync",
+        "callExpression": "normalizeIapAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "toSymbol": "normalizeSubscriptionAsync",
+        "callExpression": "normalizeSubscriptionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
         "toSymbol": "isRecord",
         "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
-        "fromSymbol": "ensureFamilyAsync",
+        "fromSymbol": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
         "toSymbol": "isNonEmptyString",
         "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
-        "fromSymbol": "ensureFamilyAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureFamilyAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "toApplePeriod",
-        "callExpression": "toApplePeriod",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureSubscriptionAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureIapAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureIapAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureIapAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureIapAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureIapAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "syncSubscriptionLocalizationsAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts",
-        "toSymbol": "writeLocalizationAsync",
-        "callExpression": "writeLocalizationAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "syncIapLocalizationsAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "fromSymbol": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeIapAsync",
         "toSymbol": "isRecord",
         "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeIapAsync",
         "toSymbol": "isNonEmptyString",
         "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeIapAsync",
         "toSymbol": "readLocalizationsAsync",
         "callExpression": "readLocalizationsAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "isRecord",
         "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "isNonEmptyString",
         "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "safeRequestAsync",
         "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "normalizeSubscriptionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "parseResource",
         "callExpression": "parseResource",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "readLocalizationsAsync",
         "callExpression": "readLocalizationsAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
-        "toSymbol": "readRelationshipId",
-        "callExpression": "readRelationshipId",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "toSymbol": "readGroupRelationshipId",
+        "callExpression": "readGroupRelationshipId",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "normalizeSubscriptionAsync",
         "toSymbol": "fromApplePeriod",
         "callExpression": "fromApplePeriod",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "readLocalizationsAsync",
         "toSymbol": "readCollectionAsync",
         "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "readCollectionAsync",
         "toSymbol": "safeRequestAsync",
         "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "readCollectionAsync",
         "toSymbol": "isSuccess",
         "callExpression": "isSuccess",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "readCollectionAsync",
         "toSymbol": "parseJson",
         "callExpression": "parseJson",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "readCollectionAsync",
         "toSymbol": "isRecord",
         "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "readGroupRelationshipId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "readGroupRelationshipId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "parseResource",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "parseResource",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
       },
       {
         "fromSymbol": "safeRequestAsync",
         "toSymbol": "request",
         "callExpression": "runtime.request",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/monetization/adapters/outbound/inspectAppStoreConnectMonetizationAsync.ts"
+      },
+      {
+        "fromSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "toSymbol": "ensureFamilyAsync",
+        "callExpression": "ensureFamilyAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "toSymbol": "ensureSubscriptionAsync",
+        "callExpression": "ensureSubscriptionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "toSymbol": "syncSubscriptionLocalizationsAsync",
+        "callExpression": "syncSubscriptionLocalizationsAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "toSymbol": "ensureIapAsync",
+        "callExpression": "ensureIapAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncAppStoreConnectMonetizationProductAsync",
+        "toSymbol": "syncIapLocalizationsAsync",
+        "callExpression": "syncIapLocalizationsAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureFamilyAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "toSymbol": "matchesAttribute",
+        "callExpression": "matchesAttribute",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureFamilyAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureFamilyAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureFamilyAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureFamilyAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "toApplePeriod",
+        "callExpression": "toApplePeriod",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureSubscriptionAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureIapAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureIapAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureIapAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureIapAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "ensureIapAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncSubscriptionLocalizationsAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "toSymbol": "writeLocalizationAsync",
+        "callExpression": "writeLocalizationAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "syncIapLocalizationsAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "matchesAttribute",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "safeRequestAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/features/monetization/adapters/outbound/syncAppStoreConnectMonetizationProductAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "resolveContextAsync",
+        "callExpression": "resolveContextAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readNotesAsync",
+        "toSymbol": "readNotesAsync",
+        "callExpression": "readNotesAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "readBuildNumberAsync",
+        "callExpression": "readBuildNumberAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readReviewAsync",
+        "toSymbol": "readReviewAsync",
+        "callExpression": "readReviewAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "readPhasedAsync",
+        "callExpression": "readPhasedAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "findAppStoreConnectAppIdAsync",
+        "callExpression": "findAppStoreConnectAppIdAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toSymbol": "matchesVersion",
+        "callExpression": "matchesVersion",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "matchesVersion",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readNotesAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "parseResource",
+        "callExpression": "parseResource",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readBuildNumberAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readReviewAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts",
+        "toSymbol": "reviewMatchesVersion",
+        "callExpression": "reviewMatchesVersion",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readReviewAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readReviewAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "reviewMatchesVersion",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "parseResource",
+        "callExpression": "parseResource",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readPhasedAsync",
+        "toSymbol": "normalizePhasedState",
+        "callExpression": "normalizePhasedState",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
+      },
+      {
+        "fromSymbol": "safeRequestAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
       },
       {
         "fromSymbol": "parseResource",
         "toSymbol": "parseJson",
         "callExpression": "parseJson",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
       },
       {
         "fromSymbol": "parseResource",
         "toSymbol": "isRecord",
         "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "parseResource",
-        "callExpression": "parseResource",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "readRelationshipId",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
-      },
-      {
-        "fromSymbol": "readRelationshipId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/monetization/adapters/outbound/createAppStoreConnectMonetizationAdapter.ts"
+        "sourcePath": "src/features/release/adapters/outbound/appStoreConnectReleaseInspectionApi.ts"
       },
       {
         "fromSymbol": "inspectAsync",
@@ -2820,6 +3917,414 @@
         "sourcePath": "src/features/setup/adapters/outbound/createAppStoreConnectSetupAdapter.ts"
       },
       {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "resolveContextAsync",
+        "callExpression": "resolveContextAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "writeLocaleAsync",
+        "toSymbol": "writeLocaleAsync",
+        "callExpression": "writeLocaleAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "findAppStoreConnectAppIdAsync",
+        "callExpression": "findAppStoreConnectAppIdAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "findEditableId",
+        "callExpression": "findEditableId",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "resolveContextAsync",
+        "toSymbol": "readLocalizationsAsync",
+        "callExpression": "readLocalizationsAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts",
+        "toSymbol": "isEditableResource",
+        "callExpression": "isEditableResource",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "findEditableId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "findEditableId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "isEditableResource",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "isEditableResource",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readLocalizationsAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "parseLocalization",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "parseLocalization",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "writeLocaleAsync",
+        "toSymbol": "writeLocalizationAsync",
+        "callExpression": "writeLocalizationAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "ownerRelationship",
+        "callExpression": "ownerRelationship",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "writeLocalizationAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "safeRequestAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectListingMetadataApi.ts"
+      },
+      {
+        "fromSymbol": "readAssetsAsync",
+        "toSymbol": "readAssetsAsync",
+        "callExpression": "readAssetsAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "replaceAssetsAsync",
+        "toSymbol": "replaceAssetsAsync",
+        "callExpression": "replaceAssetsAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "readLocalizationAssetsAsync",
+        "callExpression": "readLocalizationAssetsAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readLocalizationAssetsAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "readScreenshotSetAsync",
+        "callExpression": "readScreenshotSetAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readScreenshotSetAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readScreenshotSetAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readScreenshotSetAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "replaceAssetsAsync",
+        "toSymbol": "ensureScreenshotSetAsync",
+        "callExpression": "ensureScreenshotSetAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "replaceAssetsAsync",
+        "toSymbol": "clearScreenshotsAsync",
+        "callExpression": "clearScreenshotsAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "replaceAssetsAsync",
+        "toSymbol": "uploadScreenshotAsync",
+        "callExpression": "uploadScreenshotAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "ensureScreenshotSetAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "matchesScreenshotVariant",
+        "callExpression": "matchesScreenshotVariant",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "ensureScreenshotSetAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "ensureScreenshotSetAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "ensureScreenshotSetAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "ensureScreenshotSetAsync",
+        "toSymbol": "readResourceId",
+        "callExpression": "readResourceId",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "matchesScreenshotVariant",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "clearScreenshotsAsync",
+        "toSymbol": "readCollectionAsync",
+        "callExpression": "readCollectionAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "uploadScreenshotAsync",
+        "toSymbol": "reserveScreenshotAsync",
+        "callExpression": "reserveScreenshotAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts",
+        "toSymbol": "upload",
+        "callExpression": "runtime.upload",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "uploadScreenshotAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "uploadScreenshotAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "reserveScreenshotAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "reserveScreenshotAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "reserveScreenshotAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "reserveScreenshotAsync",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "reserveScreenshotAsync",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "parseUploadOperation",
+        "toSymbol": "unknownArray",
+        "callExpression": "unknownArray",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "safeRequestAsync",
+        "callExpression": "safeRequestAsync",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isSuccess",
+        "callExpression": "isSuccess",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readCollectionAsync",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "safeRequestAsync",
+        "toSymbol": "request",
+        "callExpression": "runtime.request",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "parseJson",
+        "callExpression": "parseJson",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "readResourceId",
+        "toSymbol": "isNonEmptyString",
+        "callExpression": "isNonEmptyString",
+        "sourcePath": "src/features/store-listing/adapters/outbound/appStoreConnectScreenshotApi.ts"
+      },
+      {
+        "fromSymbol": "createAppStoreConnectStoreListingAdapter",
+        "toSymbol": "createAppStoreConnectListingMetadataApi",
+        "callExpression": "createAppStoreConnectListingMetadataApi",
+        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
+        "fromSymbol": "createAppStoreConnectStoreListingAdapter",
+        "toSymbol": "createAppStoreConnectScreenshotApi",
+        "callExpression": "createAppStoreConnectScreenshotApi",
+        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+      },
+      {
         "fromSymbol": "inspectAsync",
         "toSymbol": "inspectAsync",
         "callExpression": "inspectAsync",
@@ -2846,7 +4351,7 @@
       {
         "fromSymbol": "inspectAsync",
         "toSymbol": "resolveContextAsync",
-        "callExpression": "resolveContextAsync",
+        "callExpression": "metadata.resolveContextAsync",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
@@ -2857,14 +4362,14 @@
       },
       {
         "fromSymbol": "inspectAsync",
-        "toSymbol": "mergeLocales",
-        "callExpression": "mergeLocales",
+        "toSymbol": "readAssetsAsync",
+        "callExpression": "screenshots.readAssetsAsync",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
         "fromSymbol": "inspectAsync",
-        "toSymbol": "readAssetsAsync",
-        "callExpression": "readAssetsAsync",
+        "toSymbol": "mergeAppStoreListingLocales",
+        "callExpression": "mergeAppStoreListingLocales",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
@@ -2888,7 +4393,7 @@
       {
         "fromSymbol": "syncAsync",
         "toSymbol": "resolveContextAsync",
-        "callExpression": "resolveContextAsync",
+        "callExpression": "metadata.resolveContextAsync",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
@@ -2899,279 +4404,27 @@
       },
       {
         "fromSymbol": "syncAsync",
-        "toSymbol": "replaceAssetsAsync",
-        "callExpression": "replaceAssetsAsync",
+        "toSymbol": "writeLocaleAsync",
+        "callExpression": "metadata.writeLocaleAsync",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
         "fromSymbol": "syncAsync",
-        "toSymbol": "writeLocaleAsync",
-        "callExpression": "writeLocaleAsync",
+        "toSymbol": "replaceAssetsAsync",
+        "callExpression": "screenshots.replaceAssetsAsync",
         "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
       },
       {
-        "fromSymbol": "resolveContextAsync",
-        "toSymbol": "findAppIdAsync",
-        "callExpression": "findAppIdAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+        "fromSymbol": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts",
+        "toSymbol": "mergeLocale",
+        "callExpression": "mergeLocale",
+        "sourcePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts"
       },
       {
-        "fromSymbol": "resolveContextAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "resolveContextAsync",
-        "toSymbol": "findEditableId",
-        "callExpression": "findEditableId",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "resolveContextAsync",
-        "toSymbol": "readLocalizationsAsync",
-        "callExpression": "readLocalizationsAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "findAppIdAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "isEditable",
-        "callExpression": "isEditable",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "findEditableId",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "findEditableId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readLocalizationsAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
+        "fromSymbol": "mergeLocale",
         "toSymbol": "readString",
         "callExpression": "readString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "readScreenshotSetsAsync",
-        "callExpression": "readScreenshotSetsAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readScreenshotSetsAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocaleAsync",
-        "toSymbol": "writeLocalizationAsync",
-        "callExpression": "writeLocalizationAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "writeLocalizationAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "replaceAssetsAsync",
-        "toSymbol": "ensureScreenshotSetAsync",
-        "callExpression": "ensureScreenshotSetAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "replaceAssetsAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "replaceAssetsAsync",
-        "toSymbol": "uploadScreenshotAsync",
-        "callExpression": "uploadScreenshotAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureScreenshotSetAsync",
-        "toSymbol": "readCollectionAsync",
-        "callExpression": "readCollectionAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureScreenshotSetAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureScreenshotSetAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureScreenshotSetAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "ensureScreenshotSetAsync",
-        "toSymbol": "readResourceId",
-        "callExpression": "readResourceId",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "uploadScreenshotAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "uploadScreenshotAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "uploadScreenshotAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "uploadScreenshotAsync",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts",
-        "toSymbol": "upload",
-        "callExpression": "runtime.upload",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "uploadScreenshotAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readCollectionAsync",
-        "toSymbol": "safeRequestAsync",
-        "callExpression": "safeRequestAsync",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readCollectionAsync",
-        "toSymbol": "isSuccess",
-        "callExpression": "isSuccess",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readCollectionAsync",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readCollectionAsync",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "safeRequestAsync",
-        "toSymbol": "request",
-        "callExpression": "runtime.request",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "parseJson",
-        "callExpression": "parseJson",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "isRecord",
-        "callExpression": "isRecord",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
-      },
-      {
-        "fromSymbol": "readResourceId",
-        "toSymbol": "isNonEmptyString",
-        "callExpression": "isNonEmptyString",
-        "sourcePath": "src/features/store-listing/adapters/outbound/createAppStoreConnectStoreListingAdapter.ts"
+        "sourcePath": "src/features/store-listing/adapters/outbound/mergeAppStoreListingLocales.ts"
       }
     ],
     "typeReferences": [
