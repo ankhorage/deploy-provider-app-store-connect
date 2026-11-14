@@ -13,24 +13,14 @@
     "Does not own deployment orchestration or cross-provider release policy.",
     "Does not implement other deployment providers."
   ],
-  "audience": [
-    "Applications and deployment tooling that select a deployment provider."
-  ],
-  "useCases": [
-    "Compose App Store Connect-backed application deployment."
-  ],
+  "audience": ["Applications and deployment tooling that select a deployment provider."],
+  "useCases": ["Compose App Store Connect-backed application deployment."],
   "architecture": {
     "role": "An outbound deployment-provider adapter with an explicit composition entrypoint.",
-    "invariants": [
-      "App Store Connect-specific behavior remains behind the provider boundary."
-    ]
+    "invariants": ["App Store Connect-specific behavior remains behind the provider boundary."]
   },
   "constraints": {
-    "platforms": [
-      "App Store Connect"
-    ],
-    "limitations": [
-      "Only App Store Connect-backed deployment is provided."
-    ]
+    "platforms": ["App Store Connect"],
+    "limitations": ["Only App Store Connect-backed deployment is provided."]
   }
 }
