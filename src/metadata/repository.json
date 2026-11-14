@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "kind": "adapter",
+  "title": "Ankhorage App Store Connect Deployment Provider",
+  "summary": "Provides an App Store Connect deployment provider for Ankhorage application shipment.",
+  "purpose": "Isolate App Store Connect deployment behavior behind a provider boundary.",
+  "domain": "application deployment",
+  "responsibilities": [
+    "Provide the App Store Connect deployment provider composition.",
+    "Adapt App Store Connect-specific deployment behavior to the deployment-provider boundary."
+  ],
+  "boundaries": [
+    "Does not own deployment orchestration or cross-provider release policy.",
+    "Does not implement other deployment providers."
+  ],
+  "audience": ["Applications and deployment tooling that select a deployment provider."],
+  "useCases": ["Compose App Store Connect-backed application deployment."],
+  "architecture": {
+    "role": "An outbound deployment-provider adapter with an explicit composition entrypoint.",
+    "invariants": ["App Store Connect-specific behavior remains behind the provider boundary."]
+  },
+  "constraints": {
+    "platforms": ["App Store Connect"],
+    "limitations": ["Only App Store Connect-backed deployment is provided."]
+  }
+}
